@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RangeTask", "RangeTask\RangeTask.csproj", "{61606CA4-365B-4604-848B-B901AAFAF96C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorTask", "VectorTask\VectorTask.csproj", "{C1A1442B-1EBE-40F9-9CCC-9BE694C86BA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61606CA4-365B-4604-848B-B901AAFAF96C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61606CA4-365B-4604-848B-B901AAFAF96C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61606CA4-365B-4604-848B-B901AAFAF96C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61606CA4-365B-4604-848B-B901AAFAF96C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1A1442B-1EBE-40F9-9CCC-9BE694C86BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1A1442B-1EBE-40F9-9CCC-9BE694C86BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1A1442B-1EBE-40F9-9CCC-9BE694C86BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1A1442B-1EBE-40F9-9CCC-9BE694C86BA7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BA27B59-5369-4DDE-8DCF-7C73C6ED9502}
+	EndGlobalSection
+EndGlobal
