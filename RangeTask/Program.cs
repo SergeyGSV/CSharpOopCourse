@@ -9,7 +9,6 @@ namespace Academits.Gudkov
             static void Main()
             {
                 // Курсовая 1. Часть 1
-
                 Console.Write("Укажите начало диапазона: ");
                 double from = Convert.ToDouble(Console.ReadLine());
 
