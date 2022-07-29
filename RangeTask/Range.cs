@@ -1,27 +1,30 @@
 ﻿using System;
 
-namespace RangeTask
+namespace Academits.Gudkov
 {
-    internal class Range
+    namespace RangeTask
     {
-        public double From { get; set; }
-
-        public double To { get; set; }
-
-        public Range(double from, double to)
+        internal class Range
         {
-            From = from;
-            To = to;
-        }
+            public double From { get; set; }
 
-        public double GetLength()
-        {
-            return To - From;
-        }
+            public double To { get; set; }
 
-        public bool IsInside(double number)
-        {
-            return number >= From && number <= To;
+            public Range(double from, double to)
+            {
+                From = from;
+                To = to;
+            }
+
+            public double GetLength()
+            {
+                return To - From;
+            }
+
+            public bool IsInside(double number)
+            {
+                return number >= From && number <= To;
+            }
         }
     }
 }
