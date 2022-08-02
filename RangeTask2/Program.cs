@@ -9,13 +9,17 @@ namespace RangeTask2
         {
             // Курсовая 1. Часть 2
 
-            Range range1 = new Range(21, 24);
+            Range range1 = new (21, 24);
 
-            Range range2 = new Range(25, 34);
+            Range range2 = new (25, 34);
 
-            Range intersectionRange = new Range();
+            Range intersectionRange = new ();
 
             intersectionRange = range1.GetIntersection(range2);
+
+            PrintObject(intersectionRange);
+
+            //Console.WriteLine(intersectionRange.From);
 
             Range[] unionRangeArray = new Range[10];
 

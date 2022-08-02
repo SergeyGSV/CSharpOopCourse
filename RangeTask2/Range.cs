@@ -17,21 +17,10 @@ namespace RangeTask2
             From = from;
             To = to;
         }
-
         public Range()
         {
 
         }
-
-        public double GetLength()
-        {
-            return To - From;
-        }
-
-        /*private bool IsIntersection(double number)
-        {
-            return number >= From && number <= To;
-        }*/
 
         public Range GetIntersection(Range range)
         {
@@ -89,55 +78,22 @@ namespace RangeTask2
             }
             if (a1 == b1 && a2 == b2)
             {
-                return new Range[] { new Range(a1, a2) };
+                return new Range[] { null };
             }
 
-
-            Range[] differenceRangeArray = new Range[] { this, range };
-
-            return differenceRangeArray;
+            return new Range[] { this, range };
         }
-
-        //Console.WriteLine(a1 + " " + a2 + " " + b1 + " " + b2);
-
-        /*private bool IsInside(double number)
-        {
-            return number >= From && number <= To;
-        }
-
-        public string IsNull(Range range)
-        {
-            if (range is null)
-            {
-                return "null";
-            }
-            else
-            {
-                return "Новый интервал {From}:{To}";
-                //Console.WriteLine($"Новый интервал {range.From}:{range.To}");
-            }
-        }
-
-        public void PrintObject(string line)
-        {
-            Console.WriteLine(line);
-        }*/
 
         public void PrintObject(Range range)
         {
-            this.From = From;
-            this.To = To;
-
             if (range is null)
             {
-                Console.WriteLine($"null");
+                Console.WriteLine("null");
             }
             else
             {
-                Console.WriteLine($"Новый интервал {From}:{To}");
-                //Console.WriteLine($"Новый интервал {range.From}:{range.To}");
+                Console.WriteLine($"Значение интервала {From}:{To}");
             }
         }
-
     }
 }
