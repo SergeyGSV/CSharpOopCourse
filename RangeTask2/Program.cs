@@ -1,57 +1,60 @@
 ﻿using System;
 
-
-namespace RangeTask2
+namespace Academits.Gudkov
 {
-    internal class Program
+    namespace RangeTask2
     {
-        private static void PrintObject(Range range)
+        internal class Program
         {
-            if (range is null)
+            private static void PrintObject(Range range)
             {
-                Console.WriteLine("null");
+                if (range is null)
+                {
+                    Console.WriteLine("null");
+                }
+                else
+                {
+                    Console.WriteLine($"Значение интервала {range.From}:{range.To}");
+                }
             }
-            else
+
+            private static void PrintObject(Range[] range)
             {
-                Console.WriteLine($"Значение интервала {range.From}:{range.To}");
+                if (range[0] is null)
+                {
+                    Console.WriteLine("null");
+                }
+                else if (range.Length == 1)
+                {
+                    Console.WriteLine($"Значение интервала {range[0].From}:{range[0].To}");
+                }
+                else
+                {
+                    Console.WriteLine($"Значения интервалов {range[0].From}:{range[0].To} и {range[1].From}:{range[1].To}");
+                }
             }
-        }
 
-        private static void PrintObject(Range[] range)
-        {
-            if (range[0] is null)
+            static void Main()
             {
-                Console.WriteLine("null");
+                // Курсовая 1. Часть 2
+
+                Range range1 = new Range(21, 24);
+
+                Range range2 = new Range(25, 34);
+
+                Range intersectionRange = new Range();
+                intersectionRange = range1.GetIntersection(range2);
+                PrintObject(intersectionRange);
+
+                PrintObject(range1.GetIntersection(range2));
+                Console.WriteLine();
+
+                PrintObject(range1.GetUnion(range2));
+                Console.WriteLine();
+
+                PrintObject(range1.GetDifference(range2));
+                Console.WriteLine();
             }
-            else if (range.Length == 1)
-            {
-                Console.WriteLine($"Значение интервала {range[0].From}:{range[0].To}");
-            }
-            else
-            {
-                Console.WriteLine($"Значение интервала {range[0].From}:{range[0].To} и {range[1].From}:{range[1].To}");
-            }
-        }
-
-        static void Main()
-        {
-            // Курсовая 1. Часть 2
-
-            Range range1 = new(21, 25);
-
-            Range range2 = new(25, 34);
-
-            // Range intersectionRange = new();            
-            // intersectionRange = range1.GetIntersection(range2);
-
-            PrintObject(range1.GetIntersection(range2));
-            Console.WriteLine();
-
-            PrintObject(range1.GetUnion(range2));
-            Console.WriteLine();
-
-            PrintObject(range1.GetDifference(range2));
-            Console.WriteLine();
         }
     }
 }

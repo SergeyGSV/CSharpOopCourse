@@ -4,85 +4,89 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RangeTask2
+namespace Academits.Gudkov
 {
-    internal class Range
+    namespace RangeTask2
     {
-        public double From { get; set; }
-
-        public double To { get; set; }
-
-        public Range(double from, double to)
+        internal class Range
         {
-            From = from;
-            To = to;
-        }
-        public Range()
-        {
-        }       
+            public double From { get; set; }
 
-        public Range GetIntersection(Range range)
-        {
-            double a1 = this.From;
-            double a2 = this.To;
-            double b1 = range.From;
-            double b2 = range.To;
+            public double To { get; set; }
 
-            if (a1 <= b2 && a2 >= b1)
+            public Range(double from, double to)
             {
-                double x1 = (a1 > b1) ? a1 : b1;
-                double x2 = (a2 < b2) ? a2 : b2;
-
-                return new Range(x1, x2);
+                From = from;
+                To = to;
             }
 
-            return null;
-        }
-
-        public Range[] GetUnion(Range range)
-        {
-            double a1 = this.From;
-            double a2 = this.To;
-            double b1 = range.From;
-            double b2 = range.To;
-
-            if (a1 <= b2 && a2 >= b1)
+            public Range()
             {
-                double x1 = (a1 < b1) ? a1 : b1;
-                double x2 = (a2 > b2) ? a2 : b2;
-
-                return new Range[] { new Range(x1, x2) };
             }
 
-            return new Range[] { this, range };
-        }
-
-        public Range[] GetDifference(Range range)
-        {
-            double a1 = this.From;
-            double a2 = this.To;
-            double b1 = range.From;
-            double b2 = range.To;
-
-            if (a1 < b2 && a2 > b1)
+            public Range GetIntersection(Range range)
             {
-                if (a1 < b1)
+                double a1 = this.From;
+                double a2 = this.To;
+                double b1 = range.From;
+                double b2 = range.To;
+
+                if (a1 <= b2 && a2 >= b1)
                 {
-                    return new Range[] { new Range(a1, b1) };
+                    double c1 = (a1 > b1) ? a1 : b1;
+                    double c2 = (a2 < b2) ? a2 : b2;
+
+                    return new Range(c1, c2);
                 }
-                
-                if (b2 < a2)
-                {
-                    return new Range[] { new Range(b2, a2) };
-                }
+
+                return null;
             }
 
-            if (a1 == b1 && a2 == b2)
+            public Range[] GetUnion(Range range)
             {
-                return new Range[] { null };
+                double a1 = this.From;
+                double a2 = this.To;
+                double b1 = range.From;
+                double b2 = range.To;
+
+                if (a1 <= b2 && a2 >= b1)
+                {
+                    double c1 = (a1 < b1) ? a1 : b1;
+                    double c2 = (a2 > b2) ? a2 : b2;
+
+                    return new Range[] { new Range(c1, c2) };
+                }
+
+                return new Range[] { this, range };
             }
 
-            return new Range[] { this, range };
+            public Range[] GetDifference(Range range)
+            {
+                double a1 = this.From;
+                double a2 = this.To;
+                double b1 = range.From;
+                double b2 = range.To;
+
+                if (a1 < b2 && a2 > b1)
+                {
+                    if (a1 < b1)
+                    {
+                        return new Range[] { new Range(a1, b1) };
+                    }
+
+                    if (b2 < a2)
+                    {
+                        return new Range[] { new Range(b2, a2) };
+                    }
+                }
+
+                if (a1 == b1 && a2 == b2)
+                {
+                    return new Range[] { null };
+                }
+
+                return new Range[] { this, range };
+            }
         }
     }
 }
