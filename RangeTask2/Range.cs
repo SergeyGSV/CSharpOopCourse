@@ -19,8 +19,7 @@ namespace RangeTask2
         }
         public Range()
         {
-
-        }
+        }       
 
         public Range GetIntersection(Range range)
         {
@@ -71,29 +70,19 @@ namespace RangeTask2
                 {
                     return new Range[] { new Range(a1, b1) };
                 }
+                
                 if (b2 < a2)
                 {
                     return new Range[] { new Range(b2, a2) };
                 }
             }
+
             if (a1 == b1 && a2 == b2)
             {
                 return new Range[] { null };
             }
 
             return new Range[] { this, range };
-        }
-
-        public void PrintObject(Range range)
-        {
-            if (range is null)
-            {
-                Console.WriteLine("null");
-            }
-            else
-            {
-                Console.WriteLine($"Значение интервала {From}:{To}");
-            }
         }
     }
 }
