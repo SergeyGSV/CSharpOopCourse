@@ -14,7 +14,7 @@ namespace Academits.Gudkov
                 }
                 else
                 {
-                    Console.WriteLine($"Значение интервала {range.From}:{range.To}");
+                    Console.WriteLine($"Интервал {range.From}:{range.To}");
                 }
             }
 
