@@ -2,7 +2,7 @@
 
 namespace Academits.Gudkov
 {
-    namespace RangeTask
+    namespace RangeTask1
     {
         internal class Range
         {
