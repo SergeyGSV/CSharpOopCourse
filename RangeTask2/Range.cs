@@ -28,23 +28,24 @@ namespace RangeTask2
             return To - From;
         }
 
+        /*private bool IsIntersection(double number)
+        {
+            return number >= From && number <= To;
+        }*/
+
         public Range GetIntersection(Range range)
         {
             double a1 = this.From;
             double a2 = this.To;
             double b1 = range.From;
             double b2 = range.To;
-            Console.WriteLine(a1 + " " + a2 + " " + b1 + " " + b2);
 
             if (a1 <= b2 && a2 >= b1)
             {
                 double x1 = (a1 > b1) ? a1 : b1;
                 double x2 = (a2 < b2) ? a2 : b2;
-                Range intersectionRange = new Range(x1, x2);
 
-
-                Console.WriteLine(x1 + " " + x2);
-                return intersectionRange;
+                return new Range(x1, x2);
             }
 
             return null;
@@ -56,21 +57,16 @@ namespace RangeTask2
             double a2 = this.To;
             double b1 = range.From;
             double b2 = range.To;
-            Console.WriteLine(a1 + " " + a2 + " " + b1 + " " + b2);
 
             if (a1 <= b2 && a2 >= b1)
             {
                 double x1 = (a1 < b1) ? a1 : b1;
                 double x2 = (a2 > b2) ? a2 : b2;
-                Range unionRange = new Range(x1, x2);
 
-                Console.WriteLine(x1 + " " + x2);
-                return unionRange;
+                return new Range[] { new Range(x1, x2) };
             }
 
-            Range[] unionRangeArray = new Range[] {this, range};
-                       
-            return unionRangeArray;
+            return new Range[] { this, range };
         }
 
         public Range[] GetDifference(Range range)
@@ -79,24 +75,32 @@ namespace RangeTask2
             double a2 = this.To;
             double b1 = range.From;
             double b2 = range.To;
-            Console.WriteLine(a1 + " " + a2 + " " + b1 + " " + b2);
 
-            if (a1 <= b2 && a2 >= b1)
+            if (a1 < b2 && a2 > b1)
             {
-                double x1 = (a1 < b1) ? a1 : b1;
-                double x2 = (a2 > b2) ? a2 : b2;
-                Range unionRange = new Range(x1, x2);
-
-                Console.WriteLine(x1 + " " + x2);
-                return unionRange;
+                if (a1 < b1)
+                {
+                    return new Range[] { new Range(a1, b1) };
+                }
+                if (b2 < a2)
+                {
+                    return new Range[] { new Range(b2, a2) };
+                }
+            }
+            if (a1 == b1 && a2 == b2)
+            {
+                return new Range[] { new Range(a1, a2) };
             }
 
-            Range[] unionRangeArray = new Range[] { this, range };
 
-            return unionRangeArray;
+            Range[] differenceRangeArray = new Range[] { this, range };
+
+            return differenceRangeArray;
         }
 
-        private bool IsInside(double number)
+        //Console.WriteLine(a1 + " " + a2 + " " + b1 + " " + b2);
+
+        /*private bool IsInside(double number)
         {
             return number >= From && number <= To;
         }
@@ -117,7 +121,7 @@ namespace RangeTask2
         public void PrintObject(string line)
         {
             Console.WriteLine(line);
-        }
+        }*/
 
         public void PrintObject(Range range)
         {
