@@ -26,34 +26,51 @@ namespace Academits.Gudkov
                 }
                 else if (range.Length == 1)
                 {
-                    Console.WriteLine($"Значение интервала {range[0].From}:{range[0].To}");
+                    Console.WriteLine($"Интервал {range[0].From}:{range[0].To}");
                 }
                 else
                 {
-                    Console.WriteLine($"Значения интервалов {range[0].From}:{range[0].To} и {range[1].From}:{range[1].To}");
+                    Console.WriteLine($"Интервалы {range[0].From}:{range[0].To} и {range[1].From}:{range[1].To}");
                 }
             }
 
             static void Main()
             {
                 // Курсовая 1. Часть 2
+                Range range1 = new Range();
+                Range range2 = new Range();
 
-                Range range1 = new Range(21, 24);
+                while (true)
+                {
+                    Console.WriteLine("Укажите границы диапазонов");
+                    Console.WriteLine();
 
-                Range range2 = new Range(25, 34);
+                    Console.Write("Начало первого диапазона: ");
+                    range1.From = Convert.ToDouble(Console.ReadLine());
 
-                Range intersectionRange = new Range();
-                intersectionRange = range1.GetIntersection(range2);
-                PrintObject(intersectionRange);
+                    Console.Write("Конец первого диапазона: ");
+                    range1.To = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine();
 
-                PrintObject(range1.GetIntersection(range2));
-                Console.WriteLine();
+                    Console.Write("Начало второго диапазона: ");
+                    range2.From = Convert.ToDouble(Console.ReadLine());
 
-                PrintObject(range1.GetUnion(range2));
-                Console.WriteLine();
+                    Console.Write("Конец второго диапазона: ");
+                    range2.To = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine();
 
-                PrintObject(range1.GetDifference(range2));
-                Console.WriteLine();
+                    Console.WriteLine("Результат пересечения");
+                    PrintObject(range1.GetIntersection(range2));
+                    Console.WriteLine();
+
+                    Console.WriteLine("Результат объединения");
+                    PrintObject(range1.GetUnion(range2));
+                    Console.WriteLine();
+
+                    Console.WriteLine("Результат разности");
+                    PrintObject(range1.GetDifference(range2));
+                    Console.WriteLine("------------------------------------------------------");
+                }
             }
         }
     }

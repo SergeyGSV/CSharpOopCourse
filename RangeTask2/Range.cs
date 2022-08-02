@@ -31,7 +31,7 @@ namespace Academits.Gudkov
                 double b1 = range.From;
                 double b2 = range.To;
 
-                if (a1 <= b2 && a2 >= b1)
+                if ((a1 < b2 && a2 > b1) || (a1 == b1 && a2 == b2))
                 {
                     double c1 = (a1 > b1) ? a1 : b1;
                     double c2 = (a2 < b2) ? a2 : b2;
