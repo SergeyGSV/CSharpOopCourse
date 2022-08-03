@@ -9,8 +9,7 @@ namespace Academits.Gudkov
             static void Main()
             {
                 // Курсовая 1. Задача 1. Часть 1
-
-                
+                                
             }
         }
     }

@@ -10,6 +10,7 @@ namespace Academits.Gudkov
     {
         internal class Shapes
         {
+
         }
     }
 }
