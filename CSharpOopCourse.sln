@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RangeTask2", "RangeTask2\Ra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RangeTask1", "RangeTask1\RangeTask1.csproj", "{8242A7AB-32F9-47F0-B28D-0E67BA50D52F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesTask1", "ShapesTask1\ShapesTask1.csproj", "{22BA6B05-5E4C-4342-9637-35E9B9AFE9B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesTask", "ShapesTask1\ShapesTask.csproj", "{22BA6B05-5E4C-4342-9637-35E9B9AFE9B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
