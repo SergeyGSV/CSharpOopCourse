@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Academits.Gudkov.RangeTask
 {
@@ -26,6 +25,15 @@ namespace Academits.Gudkov.RangeTask
         }
 
         // Task 2
+        public override string ToString()
+        {
+            if (this is null)
+            {
+                return $"null";
+            }
+
+            return $"({this.From};{this.To})";
+        }
         public Range GetIntersection(Range range)
         {
             if ((this.From < range.To && this.To > range.From) || (this.From == range.From && this.To == range.To))
@@ -53,6 +61,75 @@ namespace Academits.Gudkov.RangeTask
             double b1 = range.From;
             double b2 = range.To;
 
+            if (a1 == b1 && a2 == b2)
+            {
+                return new Range[] { };
+            }
+
+            if (a1 < b2 && a2 > b1)
+            {
+                if (a1 < b1)
+                {
+                    if (b2 < a2)
+                    {
+                        return new Range[] { new Range(a1, b1), new Range(b2, a2) };
+                    }
+
+                    return new Range[] { new Range(a1, b1) };
+                }
+
+                return new Range[] { new Range(b2, a2) };
+            }
+
+            return new Range[] { this, range };
+        }
+    }
+}
+
+
+/*
+ * 
+ public Range[] GetDifference(Range range)
+        {
+            double a1 = this.From;
+            double a2 = this.To;
+            double b1 = range.From;
+            double b2 = range.To;
+
+            if (a1 == b1 && a2 == b2)
+            {
+                return new Range[] { };
+            }
+
+            if (a1 < b2 && a2 > b1)
+            {
+                if (a1 < b1)
+                {
+                    if (b2 < a2)
+                    {
+                        return new Range[] { new Range(a1, b1), new Range(b2, a2) };
+                    }
+
+                    return new Range[] { new Range(a1, b1) };
+                }
+
+                return new Range[] { new Range(b2, a2) };
+            }
+
+            return new Range[] { this, range };
+        } 
+ * 
+ * 
+ * 
+ * 
+ * 
+ public Range[] GetDifference(Range range)
+        {
+            double a1 = this.From;
+            double a2 = this.To;
+            double b1 = range.From;
+            double b2 = range.To;
+
             if (a1 < b2 && a2 > b1)
             {
                 if (a1 < b1)
@@ -72,6 +149,5 @@ namespace Academits.Gudkov.RangeTask
             }
 
             return new Range[] { this, range };
-        }
-    }
-}
+        } 
+ */
