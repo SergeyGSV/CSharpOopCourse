@@ -87,24 +87,50 @@ namespace Academits.Gudkov.RangeTask
                  Console.Write("Начало второго диапазона: ");
                  rangeFrom = Convert.ToDouble(Console.ReadLine());
 
-                Console.Write("Конец второго диапазона: ");
-                rangeTo = Convert.ToDouble(Console.ReadLine());
-                Range range2 = new Range(rangeFrom, rangeTo);
-                Console.WriteLine();
+                 Console.Write("Конец второго диапазона: ");
+                 rangeTo = Convert.ToDouble(Console.ReadLine());
+                 Range range2 = new Range(rangeFrom, rangeTo);
+                 Console.WriteLine();
 
-                Console.WriteLine("Результат пересечения");
-                Print(range1.GetIntersection(range2));
-                Console.WriteLine();
+                 Range range1 = new Range(rangeFrom, rangeTo);
+
+                 Console.WriteLine("Результат пересечения");
+                 Console.WriteLine(range1.GetIntersection(range2));
+
+                 Console.WriteLine("Результат объединения");
+                 Print(range1.GetUnion(range2));
+                 Console.WriteLine();
+
+                 Console.WriteLine("Результат разности");
+                 Print(range1.GetDifference(range2));
+                 Console.WriteLine("------------------------------------------------------");
+            */
+            Range range1 = new Range(1, 10);
+            Range range2 = new Range(2, 8);
+
+            Console.WriteLine("Результат пересечения");
+            //Console.WriteLine(range1.GetIntersection(range2));
+            Print(range1.GetIntersection(range2));
+            Console.WriteLine();
 
             Console.WriteLine("Результат объединения");
             Print(range1.GetUnion(range2));
             Console.WriteLine();
 
-                Console.WriteLine("Результат разности");
-                Print(range1.GetDifference(range2));
-                Console.WriteLine("------------------------------------------------------");
-            }
+            Console.WriteLine("Результат разности");
+            Print(range1.GetDifference(range2));
+
+            Range range3 = new Range(1, 10);
+            Range range4 = new Range(1, 10);
+
+            Console.WriteLine("Результат разности");
+            Print(range3.GetDifference(range4));
+
+            Range range5 = new Range(1, 10);
+            Range range6 = new Range(2, 10);
+
+            Console.WriteLine("Результат разности");
+            Print(range5.GetDifference(range6));
         }
     }
 }
-//}
