@@ -113,30 +113,6 @@ namespace Academits.Gudkov.RangeTask
                     return new Range[] { new Range(a1, b1) };
                 }
 
-                return new Range[] { new Range(b2, a2) };
-            }
-
-            return new Range[] { this, range };
-        } 
- * 
- * 
- * 
- * 
- * 
- public Range[] GetDifference(Range range)
-        {
-            double a1 = this.From;
-            double a2 = this.To;
-            double b1 = range.From;
-            double b2 = range.To;
-
-            if (a1 < b2 && a2 > b1)
-            {
-                if (a1 < b1)
-                {
-                    return new Range[] { new Range(a1, b1) };
-                }
-
                 if (b2 < a2)
                 {
                     return new Range[] { new Range(b2, a2) };
