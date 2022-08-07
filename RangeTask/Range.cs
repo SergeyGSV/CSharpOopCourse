@@ -24,7 +24,7 @@ namespace Academits.Gudkov.RangeTask
             return number >= From && number <= To;
         }
 
-        // Task 2
+        // Курсовая 1. Часть 2
         public override string ToString()
         {
             if (this is null)
@@ -61,24 +61,28 @@ namespace Academits.Gudkov.RangeTask
             double b1 = range.From;
             double b2 = range.To;
 
-            if (a1 == b1 && a2 == b2)
-            {
-                return new Range[] { };
-            }
-
+            // Проверка на пересечение в принципе
             if (a1 < b2 && a2 > b1)
             {
-                if (a1 < b1)
+                if (a1 >= b1 && a2 <= b2)
                 {
-                    if (b2 < a2)
-                    {
-                        return new Range[] { new Range(a1, b1), new Range(b2, a2) };
-                    }
+                    return new Range[] { };
+                }
 
+                if (a1 < b1 && a2 <= b2)
+                {
                     return new Range[] { new Range(a1, b1) };
                 }
 
-                return new Range[] { new Range(b2, a2) };
+                if (a1 >= b1 && a2 > b2)
+                {
+                    return new Range[] { new Range(b2, a2) };
+                }
+
+                if (a1 < b1 && a2 > b2)
+                {
+                    return new Range[] { new Range(a1, b1), new Range(b2, a2) };
+                }
             }
 
             return new Range[] { this, range };
@@ -86,44 +90,83 @@ namespace Academits.Gudkov.RangeTask
     }
 }
 
-
 /*
- * 
- public Range[] GetDifference(Range range)
+ 
+public Range[] GetDifference(Range range)
         {
             double a1 = this.From;
             double a2 = this.To;
             double b1 = range.From;
             double b2 = range.To;
 
-            if (a1 == b1 && a2 == b2)
-            {
-                return new Range[] { };
-            }
-
+            // Проверка на пересечение в принципе
             if (a1 < b2 && a2 > b1)
             {
-                if (a1 < b1)
+                if (a1 == b1 && a2 == b2)
                 {
-                    if (b2 < a2)
-                    {
-                        return new Range[] { new Range(a1, b1), new Range(b2, a2) };
-                    }
+                    return new Range[] { };
+                }
 
+                if (a1 > b1 && a2 < b2)
+                {
+                    return new Range[] { };
+                }
+
+                if (a1 == b1 && a2 < b2)
+                {
+                    return new Range[] { };
+                }
+
+                if (a2 == b2 && b1 < a1)
+                {
+                    return new Range[] { };
+                }
+
+                if (a1 < b1 && a2 <= b2)
+                {
                     return new Range[] { new Range(a1, b1) };
                 }
 
-                if (b2 < a2)
+                if (a1 >= b1 && a2 > b2)
                 {
                     return new Range[] { new Range(b2, a2) };
                 }
-            }
 
-            if (a1 == b1 && a2 == b2)
-            {
-                return new Range[] { };
+                if (a1 < b1 && a2 > b2)
+                {
+                    return new Range[] { new Range(a1, b1), new Range(b2, a2) };
+                }
             }
 
             return new Range[] { this, range };
-        } 
+        }
+
+
+// Проверка на пересечение в принципе
+            if (a1 < b2 && a2 > b1)
+            {
+                if (a1 >= b1 && a2 <= b2)
+                {
+                    return new Range[] { };
+                }
+
+                if (a1 < b1 && a2 <= b2)
+                {
+                    return new Range[] { new Range(a1, b1) };
+                }
+
+                if (a1 >= b1 && a2 > b2)
+                {
+                    return new Range[] { new Range(b2, a2) };
+                }
+
+                if (a1 < b1 && a2 > b2)
+                {
+                    return new Range[] { new Range(a1, b1), new Range(b2, a2) };
+                }
+            }
+
+            return new Range[] { this, range };
+
+
  */
