@@ -13,7 +13,8 @@ namespace Academits.Gudkov.RangeTask
             }
             else
             {
-                Console.Write($"[{range}]");
+                Console.Write($"{range}");
+                Console.WriteLine();
             }
         }
 
@@ -25,23 +26,23 @@ namespace Academits.Gudkov.RangeTask
             }
             else
             {
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder rangesStringBuilder = new StringBuilder();
 
                 foreach (Range range in ranges)
                 {
-                    stringBuilder.Append(range.ToString()).Append(", ");
+                    rangesStringBuilder.Append(range.ToString()).Append(", ");
                 }
 
-                string line = stringBuilder.Remove(stringBuilder.Length - 2, 2).ToString();
+                string rangesString = rangesStringBuilder.Remove(rangesStringBuilder.Length - 2, 2).ToString();
 
-                Console.Write($"[{line}]");
+                Console.Write($"[{rangesString}]");
                 Console.WriteLine();
             }
         }
 
         static void Main()
         {
-            // Курсовая 1. Часть 1
+           /* // Курсовая 1. Часть 1
             Console.Write("Укажите начало диапазона: ");
             double from = Convert.ToDouble(Console.ReadLine());
 
@@ -67,7 +68,8 @@ namespace Academits.Gudkov.RangeTask
             range.To = 100;
 
             Console.WriteLine($"Установлены новые значения диапазона: From = {range.From}, To = {range.To}");
-
+            Console.WriteLine();
+           */
             // Курсовая 1. Часть 2
             while (true)
             {
@@ -95,6 +97,9 @@ namespace Academits.Gudkov.RangeTask
                 Console.WriteLine("Результат пересечения");
                 Console.WriteLine(range1.GetIntersection(range2));
 
+                Console.WriteLine("Результат пересечения");
+                Print(range1.GetIntersection(range2));
+
                 Console.WriteLine("Результат объединения");
                 Print(range1.GetUnion(range2));
                 Console.WriteLine();
@@ -107,32 +112,3 @@ namespace Academits.Gudkov.RangeTask
         }
     }
 }
-
-/*
-       Range range1 = new Range(1, 10);
-       Range range2 = new Range(2, 8);
-
-       Console.WriteLine("Результат пересечения");
-       //Console.WriteLine(range1.GetIntersection(range2));
-       Print(range1.GetIntersection(range2));
-       Console.WriteLine();
-
-       Console.WriteLine("Результат объединения");
-       Print(range1.GetUnion(range2));
-       Console.WriteLine();
-
-       Console.WriteLine("Результат разности");
-       Print(range1.GetDifference(range2));
-
-       Range range3 = new Range(1, 10);
-       Range range4 = new Range(1, 10);
-
-       Console.WriteLine("Результат разности");
-       Print(range3.GetDifference(range4));
-
-       Range range5 = new Range(10, 20);
-       Range range6 = new Range(11, 21);
-
-       Console.WriteLine("Результат разности");
-       Print(range5.GetDifference(range6));
-       */

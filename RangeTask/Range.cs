@@ -24,7 +24,6 @@ namespace Academits.Gudkov.RangeTask
             return number >= From && number <= To;
         }
 
-        // Курсовая 1. Часть 2
         public override string ToString()
         {
             if (this is null)
@@ -34,6 +33,7 @@ namespace Academits.Gudkov.RangeTask
 
             return $"({this.From};{this.To})";
         }
+
         public Range GetIntersection(Range range)
         {
             if ((this.From < range.To && this.To > range.From) || (this.From == range.From && this.To == range.To))
@@ -51,122 +51,35 @@ namespace Academits.Gudkov.RangeTask
                 return new Range[] { new Range(Math.Min(this.From, range.From), Math.Max(this.To, range.To)) };
             }
 
-            return new Range[] { this, range };
+            return new Range[] { new Range(this.From, this.To), new Range(range.From, range.To) };
         }
 
         public Range[] GetDifference(Range range)
         {
-            double a1 = this.From;
-            double a2 = this.To;
-            double b1 = range.From;
-            double b2 = range.To;
-
-            // Проверка на пересечение в принципе
-            if (a1 < b2 && a2 > b1)
+            if (this.From < range.To && this.To > range.From)
             {
-                if (a1 >= b1 && a2 <= b2)
+                if (this.From >= range.From && this.To <= range.To)
                 {
                     return new Range[] { };
                 }
 
-                if (a1 < b1 && a2 <= b2)
+                if (this.From < range.From && this.To <= range.To)
                 {
-                    return new Range[] { new Range(a1, b1) };
+                    return new Range[] { new Range(this.From, range.From) };
                 }
 
-                if (a1 >= b1 && a2 > b2)
+                if (this.From >= range.From && this.To > range.To)
                 {
-                    return new Range[] { new Range(b2, a2) };
+                    return new Range[] { new Range(range.To, this.To) };
                 }
 
-                if (a1 < b1 && a2 > b2)
+                if (this.From < range.From && this.To > range.To)
                 {
-                    return new Range[] { new Range(a1, b1), new Range(b2, a2) };
+                    return new Range[] { new Range(this.From, range.From), new Range(range.To, this.To) };
                 }
             }
 
-            return new Range[] { this, range };
+            return new Range[] { new Range(this.From, this.To), new Range(range.From, range.To) };
         }
     }
 }
-
-/*
- 
-public Range[] GetDifference(Range range)
-        {
-            double a1 = this.From;
-            double a2 = this.To;
-            double b1 = range.From;
-            double b2 = range.To;
-
-            // Проверка на пересечение в принципе
-            if (a1 < b2 && a2 > b1)
-            {
-                if (a1 == b1 && a2 == b2)
-                {
-                    return new Range[] { };
-                }
-
-                if (a1 > b1 && a2 < b2)
-                {
-                    return new Range[] { };
-                }
-
-                if (a1 == b1 && a2 < b2)
-                {
-                    return new Range[] { };
-                }
-
-                if (a2 == b2 && b1 < a1)
-                {
-                    return new Range[] { };
-                }
-
-                if (a1 < b1 && a2 <= b2)
-                {
-                    return new Range[] { new Range(a1, b1) };
-                }
-
-                if (a1 >= b1 && a2 > b2)
-                {
-                    return new Range[] { new Range(b2, a2) };
-                }
-
-                if (a1 < b1 && a2 > b2)
-                {
-                    return new Range[] { new Range(a1, b1), new Range(b2, a2) };
-                }
-            }
-
-            return new Range[] { this, range };
-        }
-
-
-// Проверка на пересечение в принципе
-            if (a1 < b2 && a2 > b1)
-            {
-                if (a1 >= b1 && a2 <= b2)
-                {
-                    return new Range[] { };
-                }
-
-                if (a1 < b1 && a2 <= b2)
-                {
-                    return new Range[] { new Range(a1, b1) };
-                }
-
-                if (a1 >= b1 && a2 > b2)
-                {
-                    return new Range[] { new Range(b2, a2) };
-                }
-
-                if (a1 < b1 && a2 > b2)
-                {
-                    return new Range[] { new Range(a1, b1), new Range(b2, a2) };
-                }
-            }
-
-            return new Range[] { this, range };
-
-
- */
