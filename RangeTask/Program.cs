@@ -42,7 +42,7 @@ namespace Academits.Gudkov.RangeTask
 
         static void Main()
         {
-           /* // Курсовая 1. Часть 1
+            // Курсовая 1. Часть 1
             Console.Write("Укажите начало диапазона: ");
             double from = Convert.ToDouble(Console.ReadLine());
 
@@ -69,7 +69,7 @@ namespace Academits.Gudkov.RangeTask
 
             Console.WriteLine($"Установлены новые значения диапазона: From = {range.From}, To = {range.To}");
             Console.WriteLine();
-           */
+
             // Курсовая 1. Часть 2
             while (true)
             {
@@ -102,7 +102,6 @@ namespace Academits.Gudkov.RangeTask
 
                 Console.WriteLine("Результат объединения");
                 Print(range1.GetUnion(range2));
-                Console.WriteLine();
 
                 Console.WriteLine("Результат разности");
                 Print(range1.GetDifference(range2));
