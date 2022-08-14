@@ -9,35 +9,26 @@ namespace Academits.Gudkov.RangeTask
         {
             if (range is null)
             {
-                Console.WriteLine($"[]");
+                Console.WriteLine("null");
             }
             else
             {
-                Console.Write($"{range}");
-                Console.WriteLine();
+                Console.WriteLine(range);
             }
         }
 
         private static void Print(Range[] ranges)
         {
-            if (ranges.Length == 0 || ranges[0] is null)
+            StringBuilder rangesStringBuilder = new StringBuilder().Append('[');
+
+            foreach (Range range in ranges)
             {
-                Console.WriteLine($"[]");
+                rangesStringBuilder.Append(range).Append(", ");
             }
-            else
-            {
-                StringBuilder rangesStringBuilder = new StringBuilder();
 
-                foreach (Range range in ranges)
-                {
-                    rangesStringBuilder.Append(range.ToString()).Append(", ");
-                }
+            string rangesString = rangesStringBuilder.Remove(rangesStringBuilder.Length - 2, 2).Append(']').ToString();
 
-                string rangesString = rangesStringBuilder.Remove(rangesStringBuilder.Length - 2, 2).ToString();
-
-                Console.Write($"[{rangesString}]");
-                Console.WriteLine();
-            }
+            Console.WriteLine(rangesString);
         }
 
         static void Main()
@@ -94,16 +85,13 @@ namespace Academits.Gudkov.RangeTask
                 Range range2 = new Range(rangeFrom, rangeTo);
                 Console.WriteLine();
 
-                Console.WriteLine("Результат пересечения");
-                Console.WriteLine(range1.GetIntersection(range2));
-
-                Console.WriteLine("Результат пересечения");
+                Console.WriteLine("Результат пересечения:");
                 Print(range1.GetIntersection(range2));
 
-                Console.WriteLine("Результат объединения");
+                Console.WriteLine("Результат объединения:");
                 Print(range1.GetUnion(range2));
 
-                Console.WriteLine("Результат разности");
+                Console.WriteLine("Результат разности:");
                 Print(range1.GetDifference(range2));
                 Console.WriteLine("------------------------------------------------------");
                 Console.WriteLine();
