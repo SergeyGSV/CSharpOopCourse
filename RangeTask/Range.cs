@@ -26,19 +26,14 @@ namespace Academits.Gudkov.RangeTask
 
         public override string ToString()
         {
-            if (this is null)
-            {
-                return $"null";
-            }
-
-            return $"({this.From};{this.To})";
+            return $"({From}; {To})";
         }
 
         public Range GetIntersection(Range range)
         {
-            if ((this.From < range.To && this.To > range.From) || (this.From == range.From && this.To == range.To))
+            if ((From < range.To && To > range.From) || (From == range.From && To == range.To))
             {
-                return new Range(Math.Max(this.From, range.From), Math.Min(this.To, range.To));
+                return new Range(Math.Max(From, range.From), Math.Min(To, range.To));
             }
 
             return null;
@@ -46,40 +41,40 @@ namespace Academits.Gudkov.RangeTask
 
         public Range[] GetUnion(Range range)
         {
-            if (this.From <= range.To && this.To >= range.From)
+            if (From <= range.To && To >= range.From)
             {
-                return new Range[] { new Range(Math.Min(this.From, range.From), Math.Max(this.To, range.To)) };
+                return new Range[] { new Range(Math.Min(From, range.From), Math.Max(To, range.To)) };
             }
 
-            return new Range[] { new Range(this.From, this.To), new Range(range.From, range.To) };
+            return new Range[] { new Range(From, To), new Range(range.From, range.To) };
         }
 
         public Range[] GetDifference(Range range)
         {
-            if (this.From < range.To && this.To > range.From)
+            if (From < range.To && To > range.From)
             {
-                if (this.From >= range.From && this.To <= range.To)
+                if (From >= range.From && To <= range.To)
                 {
                     return new Range[] { };
                 }
 
-                if (this.From < range.From && this.To <= range.To)
+                if (From < range.From && To <= range.To)
                 {
-                    return new Range[] { new Range(this.From, range.From) };
+                    return new Range[] { new Range(From, range.From) };
                 }
 
-                if (this.From >= range.From && this.To > range.To)
+                if (From >= range.From && To > range.To)
                 {
-                    return new Range[] { new Range(range.To, this.To) };
+                    return new Range[] { new Range(range.To, To) };
                 }
 
-                if (this.From < range.From && this.To > range.To)
+                if (From < range.From && To > range.To)
                 {
-                    return new Range[] { new Range(this.From, range.From), new Range(range.To, this.To) };
+                    return new Range[] { new Range(From, range.From), new Range(range.To, To) };
                 }
             }
 
-            return new Range[] { new Range(this.From, this.To), new Range(range.From, range.To) };
+            return new Range[] { new Range(From, To), new Range(range.From, range.To) };
         }
     }
 }
