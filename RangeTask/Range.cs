@@ -31,7 +31,7 @@ namespace Academits.Gudkov.RangeTask
 
         public Range GetIntersection(Range range)
         {
-            if ((From < range.To && To > range.From) || (From == range.From && To == range.To))
+            if (From < range.To && To > range.From)
             {
                 return new Range(Math.Max(From, range.From), Math.Min(To, range.To));
             }
@@ -55,7 +55,7 @@ namespace Academits.Gudkov.RangeTask
             {
                 if (From >= range.From && To <= range.To)
                 {
-                    return new Range[] { };
+                    return Array.Empty<Range>();
                 }
 
                 if (From < range.From && To <= range.To)
@@ -74,7 +74,7 @@ namespace Academits.Gudkov.RangeTask
                 }
             }
 
-            return new Range[] { new Range(From, To), new Range(range.From, range.To) };
+            return new Range[] { new Range(From, To) };
         }
     }
 }

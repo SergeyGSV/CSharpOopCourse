@@ -19,18 +19,22 @@ namespace Academits.Gudkov.RangeTask
 
         private static void Print(Range[] ranges)
         {
-            StringBuilder rangesStringBuilder = new StringBuilder().Append('[');
-
-            foreach (Range range in ranges)
+            if (ranges.Length == 0)
             {
-                rangesStringBuilder.Append(range).Append(", ");
+                Console.WriteLine("null");
             }
+            else
+            {
+                StringBuilder rangesStringBuilder = new StringBuilder().Append('[');
 
-            string rangesString = rangesStringBuilder.Remove(rangesStringBuilder.Length - 2, 2).Append(']').ToString();
+                foreach (Range range in ranges)
+                {
+                    rangesStringBuilder.Append(range).Append(", ");
+                }
 
-            Console.WriteLine(rangesString);
+                Console.WriteLine(rangesStringBuilder.Remove(rangesStringBuilder.Length - 2, 2).Append(']'));
+            }
         }
-
         static void Main()
         {
             // Курсовая 1. Часть 1
