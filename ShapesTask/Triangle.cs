@@ -9,8 +9,8 @@ namespace Academits.Gudkov.ShapesTask
         private double[] triangleSides;
         private double width;
         private double height;
-        private double area;
         private double perimeter;
+        private double area;
         private string status;
         private bool statusCode = false;
 
@@ -35,21 +35,18 @@ namespace Academits.Gudkov.ShapesTask
 
             if (points.Length != 3)
             {
-                status = $"Задано неверное количество вершин, требуется 3, фактически {points.Length}";
+                status = $"Задано неверное количество вершин, требуется 3, фактически: {points.Length}";
                 statusCode = false;
-                //Console.WriteLine($"Задано неверное количество вершин, требуется 3, фактически {points.Length}");
             }
             else if (points == null || points[0] == null || points[1] == null || points[2] == null)
             {
                 status = $"Координаты вершин треугольника не заданы! (null)";
                 statusCode = false;
-                //Console.WriteLine($"Координаты вершин треугольника не заданы!");
             }
             else if (Math.Abs((points[2].X - points[0].X) * (points[1].Y - points[0].Y) - (points[1].X - points[0].X) * (points[2].Y - points[0].Y)) <= epsilon)
             {
                 status = $"Координаты вершин треугольника лежат на одной прямой!";
                 statusCode = false;
-                //Console.WriteLine($"Координаты вершин треугольника лежат на одной прямой!");
             }
             else
             {
@@ -95,7 +92,6 @@ namespace Academits.Gudkov.ShapesTask
 
         public string GetStatus()
         {
-            //Console.WriteLine($"statusCode: {statusCode}, status: {status}");
             return $"statusCode: {statusCode}, status: {status}";
         }
 
@@ -109,14 +105,14 @@ namespace Academits.Gudkov.ShapesTask
             return height;
         }
 
-        public double GetArea()
-        {
-            return area;
-        }
-
         public double GetPerimeter()
         {
             return perimeter;
         }
+
+        public double GetArea()
+        {
+            return area;
+        }              
     }
 }
