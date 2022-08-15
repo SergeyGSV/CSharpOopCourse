@@ -11,20 +11,14 @@ namespace Academits.Gudkov.ShapesTask
         private double height;
         private double area;
         private double perimeter;
+        private string status;
+        private bool statusCode = false;
 
         public Triangle(Point[] points)
         {
-            double epsilon = 1e-10;
+            ArgumentsCheck(points);
 
-            if (points == null || points[0] == null || points[1] == null || points[2] == null)
-            {
-                Console.WriteLine($"Координаты вершин треугольника не заданы!");
-            }
-            else if (Math.Abs((points[2].X - points[0].X) * (points[1].Y - points[0].Y) - (points[1].X - points[0].X) * (points[2].Y - points[0].Y)) <= epsilon)
-            {
-                Console.WriteLine($"Координаты вершин треугольника лежат на одной прямой!");
-            }
-            else
+            if (statusCode is true)
             {
                 trianglePoints = points;
                 width = CalcWidth();
@@ -32,6 +26,34 @@ namespace Academits.Gudkov.ShapesTask
                 triangleSides = CalcSides();
                 perimeter = CalcPerimeter();
                 area = CalcArea();
+            }
+        }
+
+        void ArgumentsCheck(Point[] points)
+        {
+            double epsilon = 1e-10;
+
+            if (points.Length != 3)
+            {
+                status = $"Задано неверное количество вершин, требуется 3, фактически {points.Length}";
+                statusCode = false;
+                //Console.WriteLine($"Задано неверное количество вершин, требуется 3, фактически {points.Length}");
+            }
+            else if (points == null || points[0] == null || points[1] == null || points[2] == null)
+            {
+                status = $"Координаты вершин треугольника не заданы! (null)";
+                statusCode = false;
+                //Console.WriteLine($"Координаты вершин треугольника не заданы!");
+            }
+            else if (Math.Abs((points[2].X - points[0].X) * (points[1].Y - points[0].Y) - (points[1].X - points[0].X) * (points[2].Y - points[0].Y)) <= epsilon)
+            {
+                status = $"Координаты вершин треугольника лежат на одной прямой!";
+                statusCode = false;
+                //Console.WriteLine($"Координаты вершин треугольника лежат на одной прямой!");
+            }
+            else
+            {
+                statusCode = true;
             }
         }
 
@@ -69,6 +91,12 @@ namespace Academits.Gudkov.ShapesTask
             double triangleArea = Math.Sqrt(halfPerimeter * (halfPerimeter - triangleSides[0]) * (halfPerimeter - triangleSides[1]) * (halfPerimeter - triangleSides[2]));
 
             return triangleArea;
+        }
+
+        public string GetStatus()
+        {
+            //Console.WriteLine($"statusCode: {statusCode}, status: {status}");
+            return $"statusCode: {statusCode}, status: {status}";
         }
 
         public double GetWidth()

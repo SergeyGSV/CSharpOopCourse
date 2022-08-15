@@ -6,5 +6,6 @@
         double GetHeight();
         double GetArea();
         double GetPerimeter();
+        string GetStatus();
     }
 }
