@@ -1,6 +1,8 @@
-﻿namespace Academits.Gudkov.ShapesTask
+﻿using System;
+
+namespace Academits.Gudkov.ShapesTask
 {
-    public interface IShapes
+    public interface IShapes : IComparable<IShapes>
     {
         double GetWidth();
         double GetHeight();

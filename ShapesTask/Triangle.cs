@@ -50,8 +50,19 @@ namespace Academits.Gudkov.ShapesTask
             }
             else
             {
+                status = $"{GetType().Name}";
                 statusCode = true;
             }
+        }
+
+        public int CompareTo(IShapes shapes)
+        {
+            if (area > shapes.GetArea())
+                return 1;
+            if (area < shapes.GetArea())
+                return -1;
+            else
+                return 0;
         }
 
         double CalcWidth()
@@ -113,6 +124,6 @@ namespace Academits.Gudkov.ShapesTask
         public double GetArea()
         {
             return area;
-        }              
+        }
     }
 }

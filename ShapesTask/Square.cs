@@ -1,4 +1,6 @@
-﻿namespace Academits.Gudkov.ShapesTask
+﻿using System;
+
+namespace Academits.Gudkov.ShapesTask
 {
     public class Square : IShapes
     {
@@ -31,8 +33,19 @@
             }
             else
             {
+                status = $"{GetType().Name}";
                 statusCode = true;
             }
+        }
+
+        public int CompareTo(IShapes shapes)
+        {
+            if (area > shapes.GetArea())
+                return 1;
+            if (area < shapes.GetArea())
+                return -1;
+            else
+                return 0;
         }
 
         public string GetStatus()

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Academits.Gudkov.ShapesTask
 {
@@ -34,8 +33,19 @@ namespace Academits.Gudkov.ShapesTask
             }
             else
             {
+                status = $"{GetType().Name}";
                 statusCode = true;
             }
+        }
+
+        public int CompareTo(IShapes shapes)
+        {
+            if (area > shapes.GetArea())
+                return 1;
+            if (area < shapes.GetArea())
+                return -1;
+            else
+                return 0;
         }
 
         public string GetStatus()
@@ -45,12 +55,12 @@ namespace Academits.Gudkov.ShapesTask
 
         public double GetWidth()
         {
-            return width;
+            return width * 2;
         }
 
         public double GetHeight()
         {
-            return height;
+            return height * 2;
         }
 
         public double GetPerimeter()
