@@ -21,11 +21,11 @@ namespace Academits.Gudkov.RangeTask
         {
             if (ranges.Length == 0)
             {
-                Console.WriteLine("null");
+                Console.WriteLine("[]");
             }
             else
             {
-                StringBuilder rangesStringBuilder = new StringBuilder().Append('[');
+                StringBuilder rangesStringBuilder = new StringBuilder("[");
 
                 foreach (Range range in ranges)
                 {
@@ -35,6 +35,7 @@ namespace Academits.Gudkov.RangeTask
                 Console.WriteLine(rangesStringBuilder.Remove(rangesStringBuilder.Length - 2, 2).Append(']'));
             }
         }
+
         static void Main()
         {
             // Курсовая 1. Часть 1
