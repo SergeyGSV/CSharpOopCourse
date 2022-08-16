@@ -38,16 +38,6 @@ namespace Academits.Gudkov.ShapesTask
             }
         }
 
-        public int CompareTo(IShapes shapes)
-        {
-            if (area > shapes.GetArea())
-                return 1;
-            if (area < shapes.GetArea())
-                return -1;
-            else
-                return 0;
-        }
-
         public string GetStatus()
         {
             return $"statusCode: {statusCode}, status: {status}";
@@ -71,6 +61,15 @@ namespace Academits.Gudkov.ShapesTask
         public double GetArea()
         {
             return area;
+        }
+
+        public override string ToString()
+        {
+            return $"Тип: {GetType().Name} {Environment.NewLine}" +
+                   $"Ширина: {GetWidth()} {Environment.NewLine}" +
+                   $"Высота: {GetHeight()} {Environment.NewLine}" +
+                   $"Периметр: {GetPerimeter():f2} {Environment.NewLine}" +
+                   $"Площадь: {GetArea():f2} {Environment.NewLine}";
         }
     }
 }

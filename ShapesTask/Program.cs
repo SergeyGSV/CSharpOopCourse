@@ -4,11 +4,18 @@ namespace Academits.Gudkov.ShapesTask
 {
     internal class Program
     {
-        public static IShapes GetMaxShapeArea(IShapes[] shapes)
+        public static IShapes GetMaxArea(IShapes[] shapes)
         {
-            Array.Sort(shapes);
+            Array.Sort(shapes, new CompareArea());
 
             return shapes[^1];
+        }
+
+        public static IShapes GetSecondMaxPerimeter(IShapes[] shapes)
+        {
+            Array.Sort(shapes, new ComparePerimeter());
+
+            return shapes[^2];
         }
 
         static void Main()
@@ -32,18 +39,21 @@ namespace Academits.Gudkov.ShapesTask
 
             IShapes[] shapes = new IShapes[] { triangle1, triangle2, triangle3, circle1, circle2, circle3, rectangle1, rectangle2, rectangle3, sguare1, sguare2, sguare3 };
 
-            Console.WriteLine("Максимальная площадь фигуры в массиве: {0:f2}", GetMaxShapeArea(shapes).GetArea());
-            Console.WriteLine();
-
+            Console.WriteLine(GetMaxArea(shapes));
+            /*
             foreach (IShapes shape in shapes)
             {
                 Console.WriteLine("{0,10}  | {1:f2}", shape.GetType().Name, shape.GetArea());
             }
 
-            /*
-            Point[] point2 = new Point[2];
-            IShapes triangle2 = new Triangle(point2);
+            Console.WriteLine();
             */
+            Console.WriteLine(GetSecondMaxPerimeter(shapes));
+            /*
+            foreach (IShapes shape in shapes)
+            {
+                Console.WriteLine("{0,10}  | {1:f2}", shape.GetType().Name, shape.GetPerimeter());
+            }*/
         }
     }
 }

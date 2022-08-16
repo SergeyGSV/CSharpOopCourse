@@ -55,16 +55,6 @@ namespace Academits.Gudkov.ShapesTask
             }
         }
 
-        public int CompareTo(IShapes shapes)
-        {
-            if (area > shapes.GetArea())
-                return 1;
-            if (area < shapes.GetArea())
-                return -1;
-            else
-                return 0;
-        }
-
         double CalcWidth()
         {
             double[] xPointsArray = new double[] { trianglePoints[0].X, trianglePoints[1].X, trianglePoints[2].X };
@@ -124,6 +114,16 @@ namespace Academits.Gudkov.ShapesTask
         public double GetArea()
         {
             return area;
+        }
+
+        public override string ToString()
+        {
+            return $"Тип: {GetType().Name} {Environment.NewLine}" +
+                   $"Ширина: {GetWidth()} {Environment.NewLine}" +
+                   $"Высота: {GetHeight()} {Environment.NewLine}" +
+                   $"Периметр: {GetPerimeter():f2} {Environment.NewLine}" +
+                   $"Площадь: {GetArea():f2} {Environment.NewLine}" +
+                   $"Координаты: ({trianglePoints[0].X}; {trianglePoints[0].Y}), ({trianglePoints[1].X}; {trianglePoints[1].Y}), ({trianglePoints[2].X}; {trianglePoints[2].Y}) {Environment.NewLine}";
         }
     }
 }
