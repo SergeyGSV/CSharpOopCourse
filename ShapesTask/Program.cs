@@ -8,7 +8,7 @@ namespace Academits.Gudkov.ShapesTask
         {
             Array.Sort(shapes);
 
-            return shapes[shapes.Length - 1];
+            return shapes[^1];
         }
 
         static void Main()
@@ -32,7 +32,7 @@ namespace Academits.Gudkov.ShapesTask
 
             IShapes[] shapes = new IShapes[] { triangle1, triangle2, triangle3, circle1, circle2, circle3, rectangle1, rectangle2, rectangle3, sguare1, sguare2, sguare3 };
 
-            Console.WriteLine("Максимальная площадь фигуры в массиве равна: {0:f2}", GetMaxShapeArea(shapes).GetArea());
+            Console.WriteLine("Максимальная площадь фигуры в массиве: {0:f2}", GetMaxShapeArea(shapes).GetArea());
             Console.WriteLine();
 
             foreach (IShapes shape in shapes)
