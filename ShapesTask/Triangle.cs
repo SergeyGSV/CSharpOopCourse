@@ -125,5 +125,40 @@ namespace Academits.Gudkov.ShapesTask
                    $"Площадь: {GetArea():f2} {Environment.NewLine}" +
                    $"Координаты: ({trianglePoints[0].X}; {trianglePoints[0].Y}), ({trianglePoints[1].X}; {trianglePoints[1].Y}), ({trianglePoints[2].X}; {trianglePoints[2].Y}) {Environment.NewLine}";
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
+            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            Triangle p = (Triangle)obj;
+
+            return width == p.width && height == p.height && perimeter == p.perimeter && area == p.area;
+        }
+
+        public override int GetHashCode()
+        {
+            int prime = 23;
+            int hash = 17;
+            hash = prime * hash + (triangleSides != null ? (triangleSides[0] + triangleSides[1] + triangleSides[2]).GetHashCode() : 0);
+
+            if (trianglePoints != null)
+            {
+                hash = prime * hash + trianglePoints[0].X.GetHashCode();
+                hash = prime * hash + trianglePoints[0].Y.GetHashCode();
+                hash = prime * hash + trianglePoints[1].X.GetHashCode();
+                hash = prime * hash + trianglePoints[1].Y.GetHashCode();
+                hash = prime * hash + trianglePoints[2].X.GetHashCode();
+                hash = prime * hash + trianglePoints[2].Y.GetHashCode();
+            }
+
+            return hash;
+        }
     }
 }

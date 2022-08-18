@@ -37,6 +37,8 @@ namespace Academits.Gudkov.ShapesTask
             IShapes sguare2 = new Square(12);
             IShapes sguare3 = new Square(20);
 
+            Console.WriteLine(triangle1.Equals(triangle1));
+
             IShapes[] shapes = new IShapes[] { triangle1, triangle2, triangle3, circle1, circle2, circle3, rectangle1, rectangle2, rectangle3, sguare1, sguare2, sguare3 };
 
             Console.WriteLine(GetMaxArea(shapes));
@@ -54,6 +56,13 @@ namespace Academits.Gudkov.ShapesTask
             {
                 Console.WriteLine("{0,10}  | {1:f2}", shape.GetType().Name, shape.GetPerimeter());
             }*/
+
+            IShapes triangle4 = new Triangle(new Point[3]);
+
+            Console.WriteLine(triangle1.GetHashCode());
+            Console.WriteLine(triangle2.GetHashCode());
+            Console.WriteLine(triangle3.GetHashCode());
+            Console.WriteLine(triangle4.GetHashCode());
         }
     }
 }

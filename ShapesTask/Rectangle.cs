@@ -71,5 +71,31 @@ namespace Academits.Gudkov.ShapesTask
                    $"Периметр: {GetPerimeter():f2} {Environment.NewLine}" +
                    $"Площадь: {GetArea():f2} {Environment.NewLine}";
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
+            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            Rectangle p = (Rectangle)obj;
+
+            return width == p.width && height == p.height && perimeter == p.perimeter && area == p.area;
+        }
+
+        public override int GetHashCode()
+        {
+            int prime = 23;
+            int hash = 17;
+            hash = prime * hash + width.GetHashCode();
+            hash = prime * hash + height.GetHashCode();
+                       
+            return hash;
+        }
     }
 }
