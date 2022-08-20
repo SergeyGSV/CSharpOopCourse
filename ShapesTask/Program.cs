@@ -24,6 +24,7 @@ namespace Academits.Gudkov.ShapesTask
             IShapes triangle1 = new Triangle(new Point[] { new Point(122, 79), new Point(100, 89), new Point(90, 115) });
             IShapes triangle2 = new Triangle(new Point[] { new Point(95, 83), new Point(107, 70), new Point(98, 100) });
             IShapes triangle3 = new Triangle(new Point[] { new Point(34, 9), new Point(17, 14), new Point(17, 95) });
+            IShapes triangle5 = new Triangle(new Point[] { new Point(34, 9), new Point(17, 14), new Point(17, 95.1) });
 
             IShapes circle1 = new Circle(18.24);
             IShapes circle2 = new Circle(15.17);
@@ -59,10 +60,10 @@ namespace Academits.Gudkov.ShapesTask
 
             IShapes triangle4 = new Triangle(new Point[3]);
 
-            Console.WriteLine(triangle1.GetHashCode());
-            Console.WriteLine(triangle2.GetHashCode());
             Console.WriteLine(triangle3.GetHashCode());
-            Console.WriteLine(triangle4.GetHashCode());
+            Console.WriteLine(triangle5.GetHashCode());
+            Console.WriteLine(triangle1.GetHashCode());
+            Console.WriteLine(triangle1.GetHashCode());
         }
     }
 }
