@@ -78,7 +78,7 @@ namespace Academits.Gudkov.ShapesTask
             {
                 return true;
             }
-            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            if (obj is null || obj.GetType() != GetType())
             {
                 return false;
             }
@@ -92,7 +92,8 @@ namespace Academits.Gudkov.ShapesTask
         {
             int prime = 23;
             int hash = 17;
-            hash = prime * hash + width.GetHashCode();
+            hash = prime * hash + height.GetHashCode();
+            hash = prime * hash + GetType().GetHashCode();
                         
             return hash;
         }

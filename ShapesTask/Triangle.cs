@@ -132,7 +132,7 @@ namespace Academits.Gudkov.ShapesTask
             {
                 return true;
             }
-            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            if (obj is null || obj.GetType() != GetType())
             {
                 return false;
             }
@@ -147,6 +147,7 @@ namespace Academits.Gudkov.ShapesTask
             int prime = 23;
             int hash = 17;
             hash = prime * hash + (triangleSides != null ? (triangleSides[0] + triangleSides[1] + triangleSides[2]).GetHashCode() : 0);
+            hash = prime * hash + GetType().GetHashCode();
 
             if (trianglePoints != null)
             {
