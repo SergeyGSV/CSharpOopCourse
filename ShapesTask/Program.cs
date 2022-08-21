@@ -48,38 +48,33 @@ namespace Academits.Gudkov.ShapesTask
 
             IShapes[] shapes = new IShapes[] { triangle1, triangle2, triangle3, triangle4, triangle5, triangle6, circle1, circle2, circle3, rectangle1, rectangle2, rectangle3, sguare1, sguare2, sguare3 };
 
-            Console.WriteLine($"Результат сравнения треугольников по Equals: {triangle1.Equals(triangle2)}");
-            Console.WriteLine($"Результат сравнения треугольников по Equals: {triangle2.Equals(triangle3)}");
-            Console.WriteLine($"Результат сравнения треугольников по Equals: {triangle3.Equals(triangle4)}");
-            Console.WriteLine($"Результат сравнения треугольников по Equals: {triangle4.Equals(triangle5)}");
-            Console.WriteLine($"Результат сравнения треугольников по Equals: {triangle5.Equals(triangle6)}");
-
-            Console.WriteLine($"Результат сравнения \"нулевых\" окружности и прямоугольника: Equals = {circle3.Equals(rectangle3)}, HashCode = {CompareHashCode(circle3, rectangle3)}");
-            Console.WriteLine($"Результат сравнения \"нулевых\" окружности и квадрата по Equals: {circle3.Equals(sguare3)}, HashCode = {CompareHashCode(circle3, sguare3)}");
-            Console.WriteLine($"Результат сравнения \"симметричных\" прямоугольников по Equals: {rectangle1.Equals(rectangle2)}, HashCode = {CompareHashCode(rectangle1, rectangle2)}");
-
+            Console.WriteLine($"Сравнение треугольников (Equals/HashCode): {triangle1.Equals(triangle2)}/{CompareHashCode(triangle1, triangle2)}");
+            Console.WriteLine($"Сравнение треугольников (Equals/HashCode): {triangle2.Equals(triangle3)}/{CompareHashCode(triangle2, triangle3)}");
+            Console.WriteLine($"Сравнение треугольников (Equals/HashCode): {triangle3.Equals(triangle4)}/{CompareHashCode(triangle3, triangle4)}");
+            Console.WriteLine($"Сравнение треугольников (Equals/HashCode): {triangle4.Equals(triangle5)}/{CompareHashCode(triangle4, triangle5)}");
+            Console.WriteLine($"Сравнение треугольников (Equals/HashCode): {triangle5.Equals(triangle6)}/{CompareHashCode(triangle5, triangle6)}");
             Console.WriteLine();
 
+            Console.WriteLine($"Сравнение \"нулевых\" окружности и прямоугольника (Equals/HashCode): {circle3.Equals(rectangle3)}/{CompareHashCode(circle3, rectangle3)}");
+            Console.WriteLine($"Сравнение \"нулевых\" окружности и квадрата (Equals/HashCode):       {circle3.Equals(sguare3)}/{CompareHashCode(circle3, sguare3)}");
+            Console.WriteLine($"Сравнение \"симметричных\" прямоугольников (Equals/HashCode):        {rectangle1.Equals(rectangle2)}/{CompareHashCode(rectangle1, rectangle2)}");
+            Console.WriteLine();
+
+            Console.WriteLine($"Максимальная площадь фигуры в массиве:{Environment.NewLine}{GetMaxArea(shapes)}");
+           
             foreach (IShapes shape in shapes)
             {
-                Console.WriteLine("{0,10}  | {1:f2}", shape.GetType().Name, shape.GetHashCode());
+                Console.WriteLine("{0,10}  | {1:f2}", shape.GetType().Name, shape.GetArea());
             }
 
             Console.WriteLine();
 
-            Console.WriteLine($"Максимальная площадь фигуры в массиве = {GetMaxArea(shapes)}");
-            Console.WriteLine($"Второй по величине периметр в массиве = {GetSecondMaxPerimeter(shapes)}");
-
-            /*
+            Console.WriteLine($"Второй по величине периметр в массиве:{Environment.NewLine}{GetSecondMaxPerimeter(shapes)}");
+            
             foreach (IShapes shape in shapes)
             {
                 Console.WriteLine("{0,10}  | {1:f2}", shape.GetType().Name, shape.GetPerimeter());
             }
-            */
-
-            Console.WriteLine();
-
-
         }
     }
 }
