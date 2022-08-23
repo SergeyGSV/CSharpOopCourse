@@ -1,11 +1,10 @@
-﻿namespace Academits.Gudkov.ShapesTask
+﻿namespace Academits.Gudkov.ShapesTask.Shapes
 {
-    public interface IShapes
+    public interface IShape
     {
         double GetWidth();
         double GetHeight();
         double GetArea();
         double GetPerimeter();
-        string GetStatus();
     }
 }
