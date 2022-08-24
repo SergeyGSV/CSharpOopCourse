@@ -22,11 +22,11 @@ namespace Academits.Gudkov.VectorTask
         public Vector(Vector vector)
         {
             Points = new double[vector.GetSize()];
-            double[] sourseVectorPoints = vector.Points;
+            double[] vectorPointsSourse = vector.Points;
 
             for (int i = 0; i < Points.Length; ++i)
             {
-                Points[i] = sourseVectorPoints[i];
+                Points[i] = vectorPointsSourse[i];
             }
         }
 
@@ -92,6 +92,94 @@ namespace Academits.Gudkov.VectorTask
             vectorInfo.Remove(vectorInfo.Length - 2, 2).Append('}');
 
             return vectorInfo.ToString();
+        }
+
+        public void AddVector(Vector vector)
+        {
+            if (Points.Length < vector.Points.Length)
+            {
+                double[] temp = new double[vector.Points.Length];
+
+                for (int i = 0; i < Points.Length; ++i)
+                {
+                    temp[i] = Points[i];
+                }
+
+                Points = temp;
+            }
+
+            for (int i = 0; i < vector.Points.Length; ++i)
+            {
+                Points[i] += vector.Points[i];
+            }
+        }
+
+        public void SubtractVector(Vector vector)
+        {
+            if (Points.Length < vector.Points.Length)
+            {
+                double[] temp = new double[vector.Points.Length];
+
+                for (int i = 0; i < Points.Length; ++i)
+                {
+                    temp[i] = Points[i];
+                }
+
+                Points = temp;
+            }
+
+            for (int i = 0; i < vector.Points.Length; ++i)
+            {
+                Points[i] -= vector.Points[i];
+            }
+        }
+
+        public void MultiplyVectorByScalar(double scalar)
+        {
+            for (int i = 0; i < Points.Length; ++i)
+            {
+                Points[i] *= scalar;
+            }
+        }
+
+        public void ReverseVector()
+        {
+            for (int i = 0; i < Points.Length; ++i)
+            {
+                Points[i] = -1 * Points[i];
+            }
+        }
+
+        public double GetLenght()
+        {
+            double pointsSquaresSum = 0;
+
+            for (int i = 0; i < Points.Length; ++i)
+            {
+                pointsSquaresSum += Points[i] * Points[i];
+            }
+
+            return Math.Sqrt(pointsSquaresSum);
+        }
+
+        public double GetPoint(int i)
+        {
+            if (i < 0 || i > Points.Length)
+            {
+                throw new ArgumentException($"Индекс компонента {i} выходит за пределы вектора размерностью {Points.Length}");
+            }
+
+            return Points[i];
+        }
+
+        public void SetPoint(int i, double newPoint)
+        {
+            if (i < 0 || i > Points.Length)
+            {
+                throw new ArgumentException($"Индекс компонента {i} выходит за пределы вектора размерностью {Points.Length}");
+            }
+
+            Points[i] = newPoint;
         }
     }
 }
