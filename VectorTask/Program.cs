@@ -54,9 +54,16 @@ namespace Academits.Gudkov.VectorTask
 
             Console.WriteLine(vector1);
 
-            Console.WriteLine(0 * (-1));
+            double[] points5 = new double[] { 0, 0, 0, 0, 0 };
+            vector1 = new Vector(points5);
+            vector2 = new Vector(points5);
+            Console.WriteLine(vector1.Equals(vector2));
 
+            vector1.MultiplyVectorByScalar(-1);
+            Console.WriteLine(vector1.Equals(vector2));
 
+            Console.WriteLine(vector1.GetHashCode());
+            Console.WriteLine(vector2.GetHashCode());
         }
     }
 }

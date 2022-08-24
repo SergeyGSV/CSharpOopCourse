@@ -181,5 +181,47 @@ namespace Academits.Gudkov.VectorTask
 
             Points[i] = newPoint;
         }
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
+
+            if (obj is null || obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            Vector p = (Vector)obj;
+
+            if (Points.Length != p.Points.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < Points.Length; ++i)
+            {
+                if (Points[i] != p.Points[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            int prime = 23;
+            int hash = 17;
+
+            for (int i = 0; i < Points.Length; ++i)
+            {
+                hash = prime * hash + Points[i].GetHashCode();
+            }
+
+            return hash;
+        }
     }
 }
