@@ -13,7 +13,7 @@ namespace Academits.Gudkov.VectorTask
         {
             if (n <= 0)
             {
-                throw new ArgumentException($"Недопустимые аргументы: размерность вектора = {n}");
+                throw new ArgumentException($"Недопустимый аргумент: размерность вектора = {n}");
             }
 
             Points = new double[n];
@@ -21,12 +21,11 @@ namespace Academits.Gudkov.VectorTask
 
         public Vector(Vector vector)
         {
-            Points = new double[vector.GetSize()];
-            double[] vectorPointsSourse = vector.Points;
+            Points = new double[vector.Points.Length];
 
             for (int i = 0; i < Points.Length; ++i)
             {
-                Points[i] = vectorPointsSourse[i];
+                Points[i] = vector.Points[i];
             }
         }
 
@@ -34,7 +33,7 @@ namespace Academits.Gudkov.VectorTask
         {
             if (points is null)
             {
-                throw new ArgumentException("Недопустимые аргументы: массив = null");
+                throw new ArgumentException("Недопустимый аргумент: массив = null");
             }
 
             if (points.Length == 0)
@@ -54,17 +53,17 @@ namespace Academits.Gudkov.VectorTask
         {
             if (n <= 0)
             {
-                throw new ArgumentException($"Недопустимые аргументы: размерность вектора = {n}");
+                throw new ArgumentException($"Недопустимый аргумент: размерность вектора = {n}");
             }
 
             if (points is null)
             {
-                throw new ArgumentException("Недопустимые аргументы: массив = null");
+                throw new ArgumentException("Недопустимый аргумент: массив = null");
             }
 
             if (points.Length == 0)
             {
-                throw new ArgumentException($"Недопустимые аргументы: размер массива = 0");
+                throw new ArgumentException($"Недопустимый аргумент: размер массива = 0");
             }
 
             Points = new double[n];
@@ -181,6 +180,7 @@ namespace Academits.Gudkov.VectorTask
 
             Points[i] = newPoint;
         }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(obj, this))
