@@ -223,5 +223,53 @@ namespace Academits.Gudkov.VectorTask
 
             return hash;
         }
+
+        public static Vector GetVectorsSum(Vector vector1, Vector vector2)
+        {
+            Vector summaryVector = new Vector(vector1);
+            summaryVector.AddVector(vector2);
+
+            return summaryVector;
+        }
+
+        public static Vector GetVectorsDifference(Vector vector1, Vector vector2)
+        {
+            Vector differenceVector = new Vector(vector1);
+            differenceVector.SubtractVector(vector2);
+
+            return differenceVector;
+        }
+
+        public static double GetVectorsScalarMultiply(Vector vector1, Vector vector2)
+        {
+            Vector vector1Temp = vector1;
+            Vector vector2Temp = vector2;
+            int n = vector1.Points.Length;
+
+            if (vector1.Points.Length < vector2.Points.Length)
+            {
+                vector1Temp = new Vector(vector2.Points.Length);
+                vector1Temp.AddVector(vector1);
+                vector2Temp = vector2;
+                n = vector2.Points.Length;
+            }
+
+            if (vector1.Points.Length > vector2.Points.Length)
+            {
+                vector2Temp = new Vector(vector1.Points.Length);
+                vector2Temp.AddVector(vector2);
+                vector1Temp = vector1;
+                n = vector1.Points.Length;
+            }
+
+            double scalarMultiplySum = 0;
+
+            for (int i = 0; i < n; ++i)
+            {
+                scalarMultiplySum += vector1Temp.Points[i] * vector2Temp.Points[i];
+            }
+
+            return scalarMultiplySum;
+        }
     }
 }
