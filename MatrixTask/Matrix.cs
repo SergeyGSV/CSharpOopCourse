@@ -9,24 +9,65 @@ namespace Academits.Gudkov.MatrixTask
 {
     public class Matrix : Vector
     {
-        public double[,] MatrixPoints { get; set; }
+        public double[,] Vectors { get; private set; }
 
-        public Matrix(int n, int m) : base(0)
+        public Matrix(int n, int m) : base(1)
         {
-            MatrixPoints = new double[n, m];
+            Vectors = new double[n, m];
         }
 
-        public Matrix(Matrix[,] vectorsMatrix) : base(0)
+        public Matrix(Matrix vectorsMatrix) : base(1)
         {
-            MatrixPoints = new double[vectorsMatrix.GetLength(0), vectorsMatrix.GetLength(1)];
+            Vectors = new double[vectorsMatrix.Vectors.GetLength(0), vectorsMatrix.Vectors.GetLength(1)];
+
+            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                {
+                    Vectors[i, j] = vectorsMatrix.Vectors[i, j];
+                }
+            }
         }
 
-        public Matrix(double[,] vectorsArray) : base(0)
+        public Matrix(double[,] vectorsArray) : base(1)
         {
+            Vectors = new double[vectorsArray.GetLength(0), vectorsArray.GetLength(1)];
+
+            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                {
+                    Vectors[i, j] = vectorsArray[i, j];
+                }
+            }
         }
 
-        public Matrix(Vector[] vector) : base(0)
+        public Matrix(Vector[] vectorsArray) : base(1)
         {
+            Vectors = new double[vectorsArray.GetLength(0), GetVectorMaxSize(vectorsArray)];
+
+            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < vectorsArray[i].GetSize(); ++j)
+                {
+                    Vectors[i, j] = vectorsArray[i].GetPoint(j);
+                }
+            }
+        }
+
+        private int GetVectorMaxSize(Vector[] vectorsArray)
+        {
+            int maxSize = 0;
+
+            for (int i = 0; i < vectorsArray.Length; ++i)
+            {
+                if (vectorsArray[i].GetSize() > maxSize)
+                {
+                    maxSize = vectorsArray[i].GetSize();
+                }
+            }
+
+            return maxSize;
         }
 
         public override bool Equals(object obj)
