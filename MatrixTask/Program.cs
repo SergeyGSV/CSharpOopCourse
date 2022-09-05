@@ -30,7 +30,7 @@ namespace Academits.Gudkov.MatrixTask
 
             Matrix matrix3 = new Matrix(vectorsArray1);
             */
-            Vector vector1 = new Vector(new double[] { 0, 3, -1, 2, 6 });
+            /*Vector vector1 = new Vector(new double[] { 0, 3, -1, 2, 6 });
             Vector vector2 = new Vector(new double[] { 2, 1, 0, 0, 3 });
             Vector vector3 = new Vector(new double[] { -2, -1, 0, 2, 5 });
             Vector vector4 = new Vector(new double[] { -5, 7, 1, 1, 1 });
@@ -81,7 +81,25 @@ namespace Academits.Gudkov.MatrixTask
             matrix5.MultiplyByColumnVector(vector11);
 
             Console.WriteLine(matrix5);
+            */
 
+            Vector[] vectorsArray4 = new Vector[]
+            {
+                new Vector(new double[] { 1, 2, 2 }),
+                new Vector(new double[] { 3, 1, 1 }),
+            };
+
+            Vector[] vectorsArray5 = new Vector[]
+            {
+                new Vector(new double[] { 4, 2 }),
+                new Vector(new double[] { 3, 1 }),
+                new Vector(new double[] { 1, 5 }),
+            };
+
+            Matrix matrix6 = new Matrix(vectorsArray4);
+            Matrix matrix7 = new Matrix(vectorsArray5);
+
+            Console.WriteLine(Matrix.GetMatrixMultiply(matrix6, matrix7));
 
             /*
             Console.WriteLine(vectorsArray2.Length);

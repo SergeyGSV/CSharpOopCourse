@@ -105,7 +105,18 @@ namespace Academits.Gudkov.MatrixTask
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            int prime = 23;
+            int hash = 1;
+
+            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                {
+                    hash = prime * hash + Vectors[i, j].GetHashCode();
+                }
+            }
+
+            return hash;
         }
 
         public override string ToString()
@@ -309,9 +320,82 @@ namespace Academits.Gudkov.MatrixTask
             {
                 Console.WriteLine($"Ошибка входных данных. Размер матрицы:{Vectors.GetLength(0)}x{Vectors.GetLength(1)}, размер вектора-столбца: {vector.Points.Length}"); ;
             }
-
         }
 
+        public void AddMatrix(Matrix matrix)
+        {
+            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                {
+                    Vectors[i, j] += matrix.Vectors[i, j];
+                }
+            }
+        }
+
+        public void SubtractMatrix(Matrix matrix)
+        {
+            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                {
+                    Vectors[i, j] -= matrix.Vectors[i, j];
+                }
+            }
+        }
+
+        public static Matrix GetMatrixSum(Matrix matrix1, Matrix matrix2)
+        {
+            Matrix matrix = new Matrix(matrix1.Vectors.GetLength(0), matrix1.Vectors.GetLength(1));
+
+            for (int i = 0; i < matrix.Vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < matrix.Vectors.GetLength(1); ++j)
+                {
+                    matrix.Vectors[i, j] = matrix1.Vectors[i, j] + matrix2.Vectors[i, j];
+                }
+            }
+
+            return matrix;
+        }
+
+        public static Matrix GetMatrixDifference(Matrix matrix1, Matrix matrix2)
+        {
+            Matrix matrix = new Matrix(matrix1.Vectors.GetLength(0), matrix1.Vectors.GetLength(1));
+
+            for (int i = 0; i < matrix.Vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < matrix.Vectors.GetLength(1); ++j)
+                {
+                    matrix.Vectors[i, j] = matrix1.Vectors[i, j] - matrix2.Vectors[i, j];
+                }
+            }
+
+            return matrix;
+        }
+
+        public static Matrix GetMatrixMultiply(Matrix matrix1, Matrix matrix2)
+        {
+            if (matrix1.Vectors.GetLength(1) == matrix2.Vectors.GetLength(0))
+            {
+                Matrix matrix = new Matrix(matrix1.Vectors.GetLength(0), matrix2.Vectors.GetLength(1));
+
+                for (int i = 0; i < matrix1.Vectors.GetLength(0); ++i)
+                {
+                    for (int j = 0; j < matrix2.Vectors.GetLength(1); ++j)
+                    {
+                        for (int k = 0; k < matrix2.Vectors.GetLength(0); ++k)
+                        {
+                            matrix.Vectors[i, j] += matrix1.Vectors[i, k] * matrix2.Vectors[k, j];
+                        }
+                    }
+                }
+
+                return matrix;
+            }
+
+            return null;
+        }
     }
 }
 
