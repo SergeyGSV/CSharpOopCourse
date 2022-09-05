@@ -54,6 +54,35 @@ namespace Academits.Gudkov.MatrixTask
             Console.WriteLine(matrix4.GetDeterminant());
 
 
+            Vector vector6 = new Vector(new double[] { 1, 1, 1, 1, 1 });
+            Vector vector7 = new Vector(new double[] { 1, 1, 1, 1, 1 });
+            Vector vector8 = new Vector(new double[] { 1, 1, 1, 1, 1 });
+            Vector vector9 = new Vector(new double[] { 1, 1, 1, 1, 1 });
+            Vector vector10 = new Vector(new double[] { 1, 1, 1, 1, 1 });
+            Vector vector11 = new Vector(new double[] { 2, 2, 2, 2, 2 });
+
+            Vector[] vectorsArray3 = new Vector[]
+            {
+                vector6,
+                vector7,
+                vector8,
+                vector9,
+                vector10
+            };
+
+            Matrix matrix5 = new Matrix(vectorsArray3);
+
+            Console.WriteLine(matrix5.GetDeterminant());
+
+            matrix5.TransposeMatrix();
+
+            Console.WriteLine(matrix5.GetDeterminant());
+
+            matrix5.MultiplyByColumnVector(vector11);
+
+            Console.WriteLine(matrix5);
+
+
             /*
             Console.WriteLine(vectorsArray2.Length);
 

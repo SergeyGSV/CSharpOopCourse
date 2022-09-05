@@ -214,7 +214,7 @@ namespace Academits.Gudkov.MatrixTask
             }
 
             matrix.SetColumnZero();
-           
+
             return matrix.Vectors[0, 0] * matrix.GetSubmatrix().GetDeterminant();
         }
 
@@ -267,7 +267,50 @@ namespace Academits.Gudkov.MatrixTask
             return matrix;
         }
 
+        public void MultiplyByStringVector(Vector vector)
+        {
+            if (Vectors.GetLength(0) == vector.Points.Length && Vectors.GetLength(1) == 1)
+            {
+                Matrix matrix = new Matrix(vector.Points.Length, vector.Points.Length);
 
+                for (int i = 0; i < matrix.Vectors.GetLength(0); ++i)
+                {
+                    for (int j = 0; j < matrix.Vectors.GetLength(1); ++j)
+                    {
+                        matrix.Vectors[i, j] = Vectors[i, j] * vector.Points[j];
+                    }
+                }
+
+                Vectors = matrix.Vectors;
+            }
+            else
+            {
+                Console.WriteLine($"Ошибка входных данных. Размер матрицы:{Vectors.GetLength(0)}x{Vectors.GetLength(1)}, размер вектора-строки: {vector.Points.Length}");
+            }
+        }
+
+        public void MultiplyByColumnVector(Vector vector)
+        {
+            if (Vectors.GetLength(1) == vector.Points.Length)
+            {
+                Matrix matrix = new Matrix(vector.Points.Length, 1);
+
+                for (int i = 0; i < Vectors.GetLength(0); ++i)
+                {
+                    for (int j = 0; j < Vectors.GetLength(1); ++j)
+                    {
+                        matrix.Vectors[i, 0] += Vectors[i, j] * vector.Points[j];
+                    }
+                }
+
+                Vectors = matrix.Vectors;
+            }
+            else
+            {
+                Console.WriteLine($"Ошибка входных данных. Размер матрицы:{Vectors.GetLength(0)}x{Vectors.GetLength(1)}, размер вектора-столбца: {vector.Points.Length}"); ;
+            }
+
+        }
 
     }
 }
