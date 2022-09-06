@@ -34,7 +34,7 @@
 
         public override string ToString()
         {
-            return $"Прямоугольник: ({Width}, {Height})";
+            return $"Прямоугольник: ширина {Width}, высота {Height}.";
         }
 
         public override bool Equals(object obj)
@@ -49,15 +49,15 @@
                 return false;
             }
 
-            Rectangle p = (Rectangle)obj;
+            Rectangle rectangle = (Rectangle)obj;
 
-            return Width == p.Width && Height == p.Height;
+            return Width == rectangle.Width && Height == rectangle.Height;
         }
 
         public override int GetHashCode()
         {
             int prime = 23;
-            int hash = 17;
+            int hash = 1;
             hash = prime * hash + Width.GetHashCode();
             hash = prime * hash + Height.GetHashCode();
 

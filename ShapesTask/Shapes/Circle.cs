@@ -33,7 +33,7 @@ namespace Academits.Gudkov.ShapesTask.Shapes
 
         public override string ToString()
         {
-            return $"Окружность: {Radius}";
+            return $"Окружность: радиус {Radius}.";
         }
 
         public override bool Equals(object obj)
@@ -48,15 +48,15 @@ namespace Academits.Gudkov.ShapesTask.Shapes
                 return false;
             }
 
-            Circle p = (Circle)obj;
+            Circle circle = (Circle)obj;
 
-            return Radius == p.Radius;
+            return Radius == circle.Radius;
         }
 
         public override int GetHashCode()
         {
             int prime = 23;
-            int hash = 17;
+            int hash = 1;
             hash = prime * hash + Radius.GetHashCode();
 
             return hash;

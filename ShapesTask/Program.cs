@@ -1,5 +1,5 @@
 ﻿using System;
-using Academits.Gudkov.ShapesTask.Comparators;
+using Academits.Gudkov.ShapesTask.Comparer;
 using Academits.Gudkov.ShapesTask.Shapes;
 
 namespace Academits.Gudkov.ShapesTask
@@ -10,10 +10,10 @@ namespace Academits.Gudkov.ShapesTask
         {
             if (shapes.Length == 0)
             {
-                throw new Exception("Массив не может быть пуст");
+                throw new ArgumentException("Массив не может быть пуст");
             }
 
-            Array.Sort(shapes, new AreaComparator());
+            Array.Sort(shapes, new AreaComparer());
 
             return shapes[^1];
         }
@@ -22,10 +22,10 @@ namespace Academits.Gudkov.ShapesTask
         {
             if (shapes.Length < 2)
             {
-                throw new Exception("Массив должен содержать минимум две фигуры");
+                throw new ArgumentException("Массив должен содержать минимум две фигуры");
             }
 
-            Array.Sort(shapes, new PerimeterComparator());
+            Array.Sort(shapes, new PerimeterComparer());
 
             return shapes[^2];
         }
@@ -61,7 +61,9 @@ namespace Academits.Gudkov.ShapesTask
             }
 
             Console.WriteLine();
-            Console.WriteLine($"Максимальная площадь фигуры в массиве: {GetMaxAreaShape(shapes)} / {GetMaxAreaShape(shapes).GetArea()}");
+            IShape maxAreaShape = GetMaxAreaShape(shapes);
+
+            Console.WriteLine($"Максимальная площадь фигуры в массиве: {maxAreaShape} / {maxAreaShape.GetArea()}");
             Console.WriteLine();
 
             foreach (IShape shape in shapes)
@@ -70,7 +72,9 @@ namespace Academits.Gudkov.ShapesTask
             }
 
             Console.WriteLine();
-            Console.WriteLine($"Второй по величине периметр в массиве: {GetSecondMaxPerimeterShape(shapes)} / {GetSecondMaxPerimeterShape(shapes).GetPerimeter()}");
+            IShape secondMaxPerimeterShape = GetSecondMaxPerimeterShape(shapes);
+
+            Console.WriteLine($"Второй по величине периметр в массиве: {secondMaxPerimeterShape} / {secondMaxPerimeterShape.GetPerimeter()}");
             Console.WriteLine();
 
             foreach (IShape shape in shapes)

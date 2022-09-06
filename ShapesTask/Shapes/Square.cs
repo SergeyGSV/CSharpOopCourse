@@ -31,7 +31,7 @@
 
         public override string ToString()
         {
-            return $"Квадрат: {SideLength}";
+            return $"Квадрат: ширина {SideLength}.";
         }
 
         public override bool Equals(object obj)
@@ -46,15 +46,15 @@
                 return false;
             }
 
-            Square p = (Square)obj;
+            Square square = (Square)obj;
 
-            return SideLength == p.SideLength;
+            return SideLength == square.SideLength;
         }
 
         public override int GetHashCode()
         {
             int prime = 23;
-            int hash = 17;
+            int hash = 1;
             hash = prime * hash + SideLength.GetHashCode();
 
             return hash;
