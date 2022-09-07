@@ -110,7 +110,7 @@ namespace Academits.Gudkov.VectorTask
             }
         }
 
-        public void MultiplyByScalar(double scalar)
+        public virtual void MultiplyByScalar(double scalar)
         {
             for (int i = 0; i < coordinates.Length; ++i)
             {
