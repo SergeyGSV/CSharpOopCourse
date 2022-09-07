@@ -1,184 +1,158 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Academits.Gudkov.VectorTask
 {
     public class Vector
     {
-        public double[] Points { get; private set; }
+        private double[] coordinates;
 
-        public Vector(int n)
+        public Vector(int vectorSize)
         {
-            if (n <= 0)
+            if (vectorSize <= 0)
             {
-                throw new ArgumentException($"Недопустимый аргумент: размерность вектора = {n}");
+                throw new ArgumentException($"Недопустимый аргумент: размерность вектора (vectorSize) = {vectorSize}");
             }
 
-            Points = new double[n];
+            coordinates = new double[vectorSize];
         }
 
         public Vector(Vector vector)
         {
-            Points = new double[vector.Points.Length];
-
-            for (int i = 0; i < Points.Length; ++i)
+            if (vector is null)
             {
-                Points[i] = vector.Points[i];
+                throw new ArgumentNullException("Недопустимый аргумент: ссылка на массив (vector) = null");
             }
+
+            coordinates = new double[vector.coordinates.Length];
+
+            vector.coordinates.CopyTo(coordinates, 0);
         }
 
-        public Vector(double[] points)
+        public Vector(double[] coordinatesArray)
         {
-            if (points is null)
+            if (coordinatesArray is null)
             {
-                throw new ArgumentException("Недопустимый аргумент: массив = null");
+                throw new ArgumentNullException("Недопустимый аргумент: ссылка на массив (coordinatesArray) = null");
             }
 
-            if (points.Length == 0)
+            if (coordinatesArray.Length == 0)
             {
-                throw new ArgumentException($"Недопустимые аргументы: размер массива = 0");
+                throw new ArgumentException("Недопустимый аргумент: размер массива (coordinatesArray) = 0");
             }
 
-            Points = new double[points.Length];
+            coordinates = new double[coordinatesArray.Length];
 
-            for (int i = 0; i < points.Length; ++i)
-            {
-                Points[i] = points[i];
-            }
+            coordinatesArray.CopyTo(coordinates, 0);
         }
 
-        public Vector(int n, double[] points)
+        public Vector(int vectorSize, double[] coordinatesArray)
         {
-            if (n <= 0)
+            if (vectorSize <= 0)
             {
-                throw new ArgumentException($"Недопустимый аргумент: размерность вектора = {n}");
+                throw new ArgumentException($"Недопустимый аргумент: размерность вектора (vectorSize) = {vectorSize}");
             }
 
-            if (points is null)
+            if (coordinatesArray is null)
             {
-                throw new ArgumentException("Недопустимый аргумент: массив = null");
+                throw new ArgumentNullException("Недопустимый аргумент: ссылка на массив (coordinatesArray) = null");
             }
 
-            if (points.Length == 0)
-            {
-                throw new ArgumentException($"Недопустимый аргумент: размер массива = 0");
-            }
+            coordinates = new double[vectorSize];
 
-            Points = new double[n];
+            int elementsRange = (vectorSize < coordinatesArray.Length) ? vectorSize : coordinatesArray.Length;
 
-            for (int i = 0; (i < n && i < points.Length); ++i)
-            {
-                Points[i] = points[i];
-            }
+            Array.Copy(coordinatesArray, coordinates, elementsRange);
         }
 
         public int GetSize()
         {
-            return Points.Length;
+            return coordinates.Length;
         }
 
         public override string ToString()
         {
-            StringBuilder vectorInfo = new StringBuilder("{");
+            StringBuilder stringBuilder = new StringBuilder("{");
 
-            foreach (double point in Points)
+            foreach (double coordinate in coordinates)
             {
-                vectorInfo.Append(point).Append(", ");
+                stringBuilder.Append(coordinate).Append(", ");
             }
 
-            vectorInfo.Remove(vectorInfo.Length - 2, 2).Append('}');
+            stringBuilder.Remove(stringBuilder.Length - 2, 2).Append('}');
 
-            return vectorInfo.ToString();
+            return stringBuilder.ToString();
         }
 
-        public void AddVector(Vector vector)
+        public void Add(Vector vector)
         {
-            if (Points.Length < vector.Points.Length)
+            if (coordinates.Length < vector.coordinates.Length)
             {
-                double[] temp = new double[vector.Points.Length];
-
-                for (int i = 0; i < Points.Length; ++i)
-                {
-                    temp[i] = Points[i];
-                }
-
-                Points = temp;
+                Array.Resize(ref coordinates, vector.coordinates.Length);
             }
 
-            for (int i = 0; i < vector.Points.Length; ++i)
+            for (int i = 0; i < vector.coordinates.Length; ++i)
             {
-                Points[i] += vector.Points[i];
+                coordinates[i] += vector.coordinates[i];
             }
         }
 
-        public void SubtractVector(Vector vector)
+        public void Subtract(Vector vector)
         {
-            if (Points.Length < vector.Points.Length)
+            if (coordinates.Length < vector.coordinates.Length)
             {
-                double[] temp = new double[vector.Points.Length];
-
-                for (int i = 0; i < Points.Length; ++i)
-                {
-                    temp[i] = Points[i];
-                }
-
-                Points = temp;
+                Array.Resize(ref coordinates, vector.coordinates.Length);
             }
 
-            for (int i = 0; i < vector.Points.Length; ++i)
+            for (int i = 0; i < vector.coordinates.Length; ++i)
             {
-                Points[i] -= vector.Points[i];
+                coordinates[i] -= vector.coordinates[i];
             }
         }
 
-        public void MultiplyVectorByScalar(double scalar)
+        public void MultiplyByScalar(double scalar)
         {
-            for (int i = 0; i < Points.Length; ++i)
+            for (int i = 0; i < coordinates.Length; ++i)
             {
-                Points[i] *= scalar;
+                coordinates[i] *= scalar;
             }
         }
 
-        public void ReverseVector()
+        public void Reverse()
         {
-            for (int i = 0; i < Points.Length; ++i)
-            {
-                Points[i] = -1 * Points[i];
-            }
+            this.MultiplyByScalar(-1);
         }
 
-        public double GetLenght()
+        public double GetLength()
         {
-            double pointsSquaresSum = 0;
+            double coordinatesSquaresSum = 0;
 
-            for (int i = 0; i < Points.Length; ++i)
+            foreach (double coordinate in coordinates)
             {
-                pointsSquaresSum += Points[i] * Points[i];
+                coordinatesSquaresSum += coordinate * coordinate;
             }
 
-            return Math.Sqrt(pointsSquaresSum);
+            return Math.Sqrt(coordinatesSquaresSum);
         }
 
-        public double GetPoint(int i)
+        public double GetCoordinate(int coordinateIndex)
         {
-            if (i < 0 || i > Points.Length)
+            if (coordinateIndex < 0 || coordinateIndex >= coordinates.Length)
             {
-                throw new ArgumentException($"Индекс компонента {i} выходит за пределы вектора размерностью {Points.Length}");
+                throw new IndexOutOfRangeException($"Индекс координаты вектора (coordinateIndex = {coordinateIndex}) выходит за допустимые границы вектора ({0} : {coordinates.Length - 1})");
             }
 
-            return Points[i];
+            return coordinates[coordinateIndex];
         }
 
-        public void SetPoint(int i, double newPoint)
+        public void SetCoordinate(int coordinateIndex, double coordinate)
         {
-            if (i < 0 || i > Points.Length)
+            if (coordinateIndex < 0 || coordinateIndex >= coordinates.Length)
             {
-                throw new ArgumentException($"Индекс компонента {i} выходит за пределы вектора размерностью {Points.Length}");
+                throw new IndexOutOfRangeException($"Индекс координаты вектора (coordinateIndex = {coordinateIndex}) выходит за допустимые границы вектора ({0} : {coordinates.Length - 1})");
             }
 
-            Points[i] = newPoint;
+            coordinates[coordinateIndex] = coordinate;
         }
 
         public override bool Equals(object obj)
@@ -193,16 +167,16 @@ namespace Academits.Gudkov.VectorTask
                 return false;
             }
 
-            Vector p = (Vector)obj;
+            Vector vector = (Vector)obj;
 
-            if (Points.Length != p.Points.Length)
+            if (coordinates.Length != vector.coordinates.Length)
             {
                 return false;
             }
 
-            for (int i = 0; i < Points.Length; ++i)
+            for (int i = 0; i < coordinates.Length; ++i)
             {
-                if (Points[i] != p.Points[i])
+                if (coordinates[i] != vector.coordinates[i])
                 {
                     return false;
                 }
@@ -214,62 +188,46 @@ namespace Academits.Gudkov.VectorTask
         public override int GetHashCode()
         {
             int prime = 23;
-            int hash = 17;
+            int hash = 1;
 
-            for (int i = 0; i < Points.Length; ++i)
+            foreach (double coordinate in coordinates)
             {
-                hash = prime * hash + Points[i].GetHashCode();
+                hash = prime * hash + coordinate.GetHashCode();
             }
 
             return hash;
         }
 
-        public static Vector GetVectorsSum(Vector vector1, Vector vector2)
+        public static Vector GetSum(Vector vector1, Vector vector2)
         {
             Vector summaryVector = new Vector(vector1);
-            summaryVector.AddVector(vector2);
+
+            summaryVector.Add(vector2);
 
             return summaryVector;
         }
 
-        public static Vector GetVectorsDifference(Vector vector1, Vector vector2)
+        public static Vector GetDifference(Vector vector1, Vector vector2)
         {
             Vector differenceVector = new Vector(vector1);
-            differenceVector.SubtractVector(vector2);
+
+            differenceVector.Subtract(vector2);
 
             return differenceVector;
         }
 
-        public static double GetVectorsScalarMultiply(Vector vector1, Vector vector2)
+        public static double GetScalarMultiplyResult(Vector vector1, Vector vector2)
         {
-            Vector vector1Temp = vector1;
-            Vector vector2Temp = vector2;
-            int n = vector1.Points.Length;
+            int minVectorSize = (vector1.coordinates.Length < vector2.coordinates.Length) ? vector1.coordinates.Length : vector2.coordinates.Length;
 
-            if (vector1.Points.Length < vector2.Points.Length)
+            double scalarMultiplyResult = 0;
+
+            for (int i = 0; i < minVectorSize; ++i)
             {
-                vector1Temp = new Vector(vector2.Points.Length);
-                vector1Temp.AddVector(vector1);
-                vector2Temp = vector2;
-                n = vector2.Points.Length;
+                scalarMultiplyResult += vector1.coordinates[i] * vector2.coordinates[i];
             }
 
-            if (vector1.Points.Length > vector2.Points.Length)
-            {
-                vector2Temp = new Vector(vector1.Points.Length);
-                vector2Temp.AddVector(vector2);
-                vector1Temp = vector1;
-                n = vector1.Points.Length;
-            }
-
-            double scalarMultiplySum = 0;
-
-            for (int i = 0; i < n; ++i)
-            {
-                scalarMultiplySum += vector1Temp.Points[i] * vector2Temp.Points[i];
-            }
-
-            return scalarMultiplySum;
+            return scalarMultiplyResult;
         }
     }
 }

@@ -11,9 +11,15 @@ namespace Academits.Gudkov.VectorTask
 
         public static void PrintComparisonResult(Vector[] vectorsArray)
         {
-            if (vectorsArray is null || vectorsArray.Length == 0)
+            if (vectorsArray is null)
             {
-                Console.WriteLine("Передан неправильный массив");
+                Console.WriteLine("Печать невозможна: ссылка на массив (vectorsArray) = null");
+
+                return;
+            }
+            else if (vectorsArray.Length == 0)
+            {
+                Console.WriteLine("Печать невозможна: размер массива (vectorsArray) = 0");
 
                 return;
             }
@@ -48,16 +54,16 @@ namespace Academits.Gudkov.VectorTask
             Vector vector1 = new Vector(5);
             Vector vector2 = new Vector(vector1);
 
-            double[] points1 = new double[] { 1, 1, 1 };
-            Vector vector3 = new Vector(points1);
+            double[] coordinatesArray1 = { 1, 1, 1 };
+            Vector vector3 = new Vector(coordinatesArray1);
 
-            double[] points2 = new double[] { 1, 1, 1, 1, 1, 1 };
-            Vector vector4 = new Vector(points2);
+            double[] coordinatesArray2 = { 1, 2, 3, 4, 5, 6 };
+            Vector vector4 = new Vector(14, coordinatesArray2);
 
             Vector vector5 = new Vector(1);
             Vector vector6 = new Vector(10);
 
-            Vector[] vectorsArray = new Vector[]
+            Vector[] vectorsArray =
             {
                 vector1,
                 vector2,
@@ -72,31 +78,35 @@ namespace Academits.Gudkov.VectorTask
 
             Console.WriteLine(vector3);
             Console.WriteLine(vector4);
-            vector3.AddVector(vector4);
+            vector3.Add(vector4);
             Console.WriteLine($"{vector3} - (Сложение) {Environment.NewLine}");
 
             Console.WriteLine(vector3);
             Console.WriteLine(vector4);
-            vector3.SubtractVector(vector4);
+            vector3.Subtract(vector4);
             Console.WriteLine($"{vector3} - (Вычитание) {Environment.NewLine}");
 
             Console.WriteLine(vector4);
-            vector4.MultiplyVectorByScalar(2);
+            vector4.MultiplyByScalar(2);
             Console.WriteLine($"{vector4} - (Умножение на 2) {Environment.NewLine}");
 
             Console.WriteLine(vector3);
-            vector3.ReverseVector();
+            vector3.Reverse();
             Console.WriteLine($"{vector3} - (Реверс) {Environment.NewLine}");
 
             Console.WriteLine(vector1);
-            vector1.SetPoint(2, 1);
-            Console.WriteLine($"{vector1} - (Замена по индексу ({vector1.GetPoint(2)} -> 1) {Environment.NewLine}");
+            double coordinate1 = vector1.GetCoordinate(2);
 
-            Console.WriteLine($"Размерность и длина вектора3: {vector3.GetSize()} / {vector3.GetLenght()} {Environment.NewLine}");
+            vector1.SetCoordinate(2, 1);
+
+            double coordinate2 = vector1.GetCoordinate(2);
+            Console.WriteLine($"{vector1} - (Замена координаты ({coordinate1} -> {coordinate2}) {Environment.NewLine}");
+
+            Console.WriteLine($"Размерность и длина вектора3: {vector3.GetSize()} / {vector3.GetLength()} {Environment.NewLine}");
 
             Console.WriteLine($"{vector3}");
             Console.WriteLine($"{vector4}");
-            vector5 = Vector.GetVectorsSum(vector3, vector4);
+            vector5 = Vector.GetSum(vector3, vector4);
             Console.WriteLine($"{vector5} - (Сложение векторов, статический метод)");
 
             Console.WriteLine($"исходный: {vector3}");
@@ -104,11 +114,18 @@ namespace Academits.Gudkov.VectorTask
 
             Console.WriteLine($"{vector5}");
             Console.WriteLine($"{vector1}");
-            vector6 = Vector.GetVectorsDifference(vector5, vector1);
+            vector6 = Vector.GetDifference(vector5, vector1);
             Console.WriteLine($"{vector6} - (Вычитание векторов, статический метод)");
 
             Console.WriteLine($"исходный: {vector5}");
             Console.WriteLine($"исходный: {vector1} {Environment.NewLine}");
+
+            Console.WriteLine($"{vector1}");
+            Console.WriteLine($"{vector3}");
+            Console.WriteLine($"{Vector.GetScalarMultiplyResult(vector1, vector3)} - (Умножение векторов, статический метод)");
+
+            Console.WriteLine($"исходный: {vector1}");
+            Console.WriteLine($"исходный: {vector3} {Environment.NewLine}");
 
             Console.WriteLine("Текущие значения векторов:");
             Print(vectorsArray);
