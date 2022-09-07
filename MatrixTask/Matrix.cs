@@ -8,9 +8,9 @@ namespace Academits.Gudkov.MatrixTask
     {
         private double[,] vectors;
 
-        public Matrix(int vectorCount, int vectorSize) : base(1)
+        public Matrix(int stringCount, int columnCount) : base(1)
         {
-            vectors = new double[vectorCount, vectorSize];
+            vectors = new double[stringCount, columnCount];
         }
 
         public Matrix(Matrix vectorsMatrix) : base(1)
@@ -122,23 +122,26 @@ namespace Academits.Gudkov.MatrixTask
             return stringBuilder.ToString();
         }
 
-        public int GetVectorCount()
+        public int GetStringCount()
         {
             return vectors.GetLength(0);
         }
 
-        public int GetVectorSize()
+        public int GetColumnCount()
         {
             return vectors.GetLength(1);
         }
 
         public Vector GetStringVector(int stringIndex)
         {
-            double[] vector = new double[vectors.GetLength(1)];
+            Vector vector = new Vector(vectors.GetLength(1));
 
-            Array.Copy(vectors, stringIndex, vector, 0, vector.Length);
+            for (int i = 0; i < vectors.GetLength(1); ++i)
+            {
+                vector.SetCoordinate(i, vectors[stringIndex, i]);
+            }
 
-            return new Vector(vector);
+            return vector;
         }
 
         public void SetVector(int stringIndex, Vector vector)
@@ -272,7 +275,7 @@ namespace Academits.Gudkov.MatrixTask
                 {
                     for (int j = 0; j < matrix.vectors.GetLength(1); ++j)
                     {
-                        matrix.vectors[i, j] = vectors[i, j] * vector.GetCoordinate(j);
+                        matrix.vectors[i, j] = vectors[i, 0] * vector.GetCoordinate(j);
                     }
                 }
 

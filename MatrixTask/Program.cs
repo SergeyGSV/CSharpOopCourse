@@ -5,15 +5,48 @@ namespace Academits.Gudkov.MatrixTask
 {
     internal class Program
     {
+        public static bool IsEqualHashCode(Matrix matrix1, Matrix matrix2)
+        {
+            return matrix1.GetHashCode() == matrix2.GetHashCode();
+        }
+
+        public static void PrintComparisonResult(Matrix[] matrixArray)
+        {
+            if (matrixArray is null)
+            {
+                Console.WriteLine("Печать невозможна: ссылка на массив (matrixArray) = null");
+
+                return;
+            }
+            else if (matrixArray.Length == 0)
+            {
+                Console.WriteLine("Печать невозможна: размер массива (matrixArray) = 0");
+
+                return;
+            }
+
+            for (int i = 0; i < matrixArray.GetLength(0); ++i)
+            {
+                for (int j = i + 1; j < matrixArray.GetLength(0) - 1; ++j)
+                {
+                    Console.WriteLine($"Матрицы: {i + 1}-{j + 1} | Equals / HashCode : {matrixArray[i].Equals(matrixArray[j])} / {IsEqualHashCode(matrixArray[i], matrixArray[j])}");
+                }
+            }
+        }
+        public static void PrintHashCodes(Matrix[] matrixArray)
+        {
+            for (int i = 0; i < matrixArray.GetLength(0); ++i)
+            {
+                Console.WriteLine($"Матрица{i + 1}: {matrixArray[i].GetHashCode()}");
+            }
+        }
+
         static void Main(string[] args)
         {
-            Vector vector1 = new Vector(new double[] { 0, 3, -1, 2, 6 });
-            Vector vector2 = new Vector(new double[] { 2, 1, 0, 0, 3 });
-            Vector vector3 = new Vector(new double[] { -2, -1, 0, 2, 5 });
-            Vector vector4 = new Vector(new double[] { -5, 7, 1, 1, 1 });
-            Vector vector5 = new Vector(new double[] { 2, 0, 2, -2, 1 });
+            Matrix matrix1 = new Matrix(5, 5);
+            Matrix matrix2 = new Matrix(matrix1);
 
-            double[,] vectorsArray =
+            double[,] vectorsArray1 =
             {
                 { 0, 3, -1, 2, 6 },
                 { 2, 1, 0, 0, 3 },
@@ -22,159 +55,114 @@ namespace Academits.Gudkov.MatrixTask
                 { 2, 0, 2, -2, 1 }
             };
 
-            Console.WriteLine($"vectorsArray.Length = {vectorsArray.Length}");
-            Console.WriteLine($"vectorsArray.GetLength(0) = {vectorsArray.GetLength(0)}");
-            Console.WriteLine($"vectorsArray.GetLength(1) = {vectorsArray.GetLength(1)}");
-
-            double[,] vectorsArrayCopy = new double[vectorsArray.GetLength(0), vectorsArray.GetLength(1)];
-
-            Array.Copy(vectorsArray, vectorsArrayCopy, vectorsArray.Length);
-
-            Console.WriteLine();
-
-            Matrix matrix1 = new Matrix(vectorsArray);
-            Matrix matrix2 = new Matrix(vectorsArrayCopy);
-
-            Console.WriteLine(matrix1.GetHashCode());
-            Console.WriteLine(matrix2.GetHashCode());
-
-            Console.WriteLine(matrix1);
-            Console.WriteLine(matrix2);
-
-            /*
-            Vector vector1 = new Vector(new double[] { 0, 3, -1, 2, 6 });
-            Vector vector2 = new Vector(new double[] { 2, 1, 0, 0, 3 });
-            Vector vector3 = new Vector(new double[] { -2, -1, 0, 2, 5 });
-            Vector vector4 = new Vector(new double[] { -5, 7, 1, 1, 1 });
-            Vector vector5 = new Vector(new double[] { 2, 0, 2, -2, 1 });
-
-
-            0, 3, -1, 2, 6 
-            2, 1, 0, 0, 3 
-            -2, -1, 0, 2, 5
-           -5, 7, 1, 1, 1
-            2, 0, 2, -2, 1 
-
-
-            */
-            /*
-            Matrix matrix1 = new Matrix(4, 10);
-
-            Console.WriteLine(matrix1.Vectors.GetLength(0));
-            Console.WriteLine(matrix1.Vectors.GetLength(1));
-
-            for (int i = 0; i < matrix1.Vectors.GetLength(0); ++i)
-            {
-                for (int j = 0; j < matrix1.Vectors.GetLength(1); ++j)
-                {
-                    matrix1.Vectors[i, j] = 1;
-                }
-            }
-
-            Matrix matrix2 = new Matrix(matrix1);
-
-            double[,] vectorsArray1 = new double[,]
-            {
-                {2,2,2,2,2 },
-                {2,2,2,2,2 }
-            };
-
             Matrix matrix3 = new Matrix(vectorsArray1);
 
-            Vector vector1 = new Vector(new double[] { 0, 3, -1, 2, 6 });
-            Vector vector2 = new Vector(new double[] { 2, 1, 0, 0, 3 });
-            Vector vector3 = new Vector(new double[] { -2, -1, 0, 2, 5 });
-            Vector vector4 = new Vector(new double[] { -5, 7, 1, 1, 1 });
-            Vector vector5 = new Vector(new double[] { 2, 0, 2, -2, 1 });
-
-            Vector[,] vectorsArray2 =
+            Vector[] vectorsArray2 =
             {
-                vector1,
-                vector2,
-                vector3,
-                vector4,
-                vector5
+                new Vector(new double[] { 1, 1, 1, 1, 1 }),
+                new Vector(new double[] { 1, 1, 1, 1, 1 }),
+                new Vector(new double[] { 1, 1, 1, 1, 1 }),
+                new Vector(new double[] { 1, 1, 1, 1, 1 }),
+                new Vector(new double[] { 1, 1, 1, 1, 1 })
             };
 
             Matrix matrix4 = new Matrix(vectorsArray2);
 
-            Console.WriteLine(matrix4.GetDeterminant());
+            Console.WriteLine(matrix1);
+            Console.WriteLine(matrix2);
+            Console.WriteLine(matrix3);
+            Console.WriteLine(matrix4);
 
-            matrix4.TransposeMatrix();
-
-            Console.WriteLine(matrix4.GetDeterminant());
-
-
-            Vector vector6 = new Vector(new double[] { 1, 1, 1, 1, 1 });
-            Vector vector7 = new Vector(new double[] { 1, 1, 1, 1, 1 });
-            Vector vector8 = new Vector(new double[] { 1, 1, 1, 1, 1 });
-            Vector vector9 = new Vector(new double[] { 1, 1, 1, 1, 1 });
-            Vector vector10 = new Vector(new double[] { 1, 1, 1, 1, 1 });
-            Vector vector11 = new Vector(new double[] { 2, 2, 2, 2, 2 });
-
-            Vector[] vectorsArray3 = new Vector[]
+            Matrix[] matrixArray =
             {
-                vector6,
-                vector7,
-                vector8,
-                vector9,
-                vector10
+                matrix1,
+                matrix2,
+                matrix3,
+                matrix4
             };
 
-            Matrix matrix5 = new Matrix(vectorsArray3);
+            PrintComparisonResult(matrixArray);
+            PrintHashCodes(matrixArray);
 
-            Console.WriteLine(matrix5.GetDeterminant());
+            Console.WriteLine($"Размер матрицы 1: {matrix1.GetStringCount()} x {matrix1.GetColumnCount()}");
 
-            matrix5.TransposeMatrix();
+            Console.WriteLine($"{matrix3.GetStringVector(2)} - вектор-строки матрицы 3");
 
-            Console.WriteLine(matrix5.GetDeterminant());
+            Console.WriteLine($"{matrix3.GetСolumnVector(2)} - вектор-столбца матрицы 3");
 
-            matrix5.MultiplyByColumnVector(vector11);
+            Matrix matrix5 = new Matrix(matrix4);
+            Vector vector = new Vector(matrix3.GetСolumnVector(2));
 
             Console.WriteLine(matrix5);
+            matrix5.SetVector(2, vector);
+            Console.WriteLine($"{matrix5} - задан вектор-строка {vector} по индексу 2");
 
-
-            Vector[] vectorsArray4 = new Vector[]
+            double[,] vectorsArray3 =
             {
-                new Vector(new double[] { 1, 2, 2 }),
-                new Vector(new double[] { 3, 1, 1 }),
+                { 1, 2, 3 },
+                { 4, 5, 6 },
+                { 7, 8, 9 }
             };
 
-            Vector[] vectorsArray5 = new Vector[]
-            {
-                new Vector(new double[] { 4, 2 }),
-                new Vector(new double[] { 3, 1 }),
-                new Vector(new double[] { 1, 5 }),
-            };
-
-            Matrix matrix6 = new Matrix(vectorsArray4);
-            Matrix matrix7 = new Matrix(vectorsArray5);
-
-            Console.WriteLine(Matrix.GetMatrixMultiply(matrix6, matrix7));
-
-
-            Console.WriteLine(vectorsArray2.Length);
-
-            Console.WriteLine(matrix4);
-
-
-            Console.WriteLine(matrix4.GetStringVector(2));
-
-
-            matrix4.SetVector(2, vector2);
-
-            Console.WriteLine(matrix4);
-
-            //Console.WriteLine(matrix4.GetСolumnVector(0));
-
-            matrix4.TransposeMatrix();
-
-            Console.WriteLine(matrix4);
+            Matrix matrix6 = new Matrix(vectorsArray3);
+            Console.WriteLine($"{matrix6} - исходная матрица");
+            matrix6.TransposeMatrix();
+            Console.WriteLine($"{matrix6} - транспонированная матрица");
 
             matrix4.MultiplyByScalar(2);
+            Console.WriteLine($"{matrix4} - умножение на скаляр (2)");
 
-            Console.WriteLine(matrix4);
-            */
+            Console.WriteLine($"{matrix3.GetDeterminant():f2} - определитель матрицы");
+
+            double[,] vectorsArray4 =
+            {
+                { 1 },
+                { 1 },
+                { 1 }
+            };
+
+            matrix4 = new Matrix(vectorsArray4);
+            matrix4.MultiplyByStringVector(new Vector(new double[] { 2, 2, 2 }));
+            Console.WriteLine($"{matrix4} - умножение на вектор-строку");
+
+            double[,] vectorsArray5 =
+            {
+                { 1, 1, 1 },
+                { 1, 1, 1 },
+                { 1, 1, 1 }
+            };
+
+            matrix4 = new Matrix(vectorsArray5);
+            matrix4.MultiplyByColumnVector(new Vector(new double[] { 2, 2, 2 }));
+            Console.WriteLine($"{matrix4} - умножение на вектор-столбец");
+
+            double[,] vectorsArray6 =
+            {
+                { 4, 4, 1 },
+                { 4, 4, 1 },
+                { 4, 4, 1 }
+            };
+
+            Matrix matrix7 = new Matrix(vectorsArray6);
+            Matrix matrix8 = new Matrix(matrix7);
+            matrix8.Add(matrix7);
+            Console.WriteLine($"{matrix8} - сложение матриц");
+
+            matrix8.Subtract(matrix7);
+            Console.WriteLine($"{matrix8} - вычитание матриц");
+
+            Matrix matrix9 = new Matrix(1, 1);
+
+            matrix9 = Matrix.GetSum(matrix7, matrix8);
+            Console.WriteLine($"{matrix9} - сложение матриц, статический метод");
+
+            Matrix matrix10 = new Matrix(1, 1);
+
+            matrix10 = Matrix.GetDifference(matrix9, matrix8);
+            Console.WriteLine($"{matrix9} - вычитание матриц, статический метод");
+
+            matrix10 = Matrix.GetMultiplyResult(matrix9, matrix8);
+            Console.WriteLine($"{matrix10} - умножение матриц, статический метод");
         }
     }
 }
