@@ -1,69 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Academits.Gudkov.VectorTask;
 
 namespace Academits.Gudkov.MatrixTask
 {
     public class Matrix : Vector
     {
-        public double[,] Vectors { get; private set; }
+        private double[,] vectors;
 
-        public Matrix(int n, int m) : base(1)
+        public Matrix(int vectorCount, int vectorSize) : base(1)
         {
-            Vectors = new double[n, m];
+            vectors = new double[vectorCount, vectorSize];
         }
 
         public Matrix(Matrix vectorsMatrix) : base(1)
         {
-            Vectors = new double[vectorsMatrix.Vectors.GetLength(0), vectorsMatrix.Vectors.GetLength(1)];
+            vectors = new double[vectorsMatrix.vectors.GetLength(0), vectorsMatrix.vectors.GetLength(1)];
 
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
-            {
-                for (int j = 0; j < Vectors.GetLength(1); ++j)
-                {
-                    Vectors[i, j] = vectorsMatrix.Vectors[i, j];
-                }
-            }
+            Array.Copy(vectorsMatrix.vectors, vectors, vectors.Length);
         }
 
         public Matrix(double[,] vectorsArray) : base(1)
         {
-            Vectors = new double[vectorsArray.GetLength(0), vectorsArray.GetLength(1)];
+            vectors = new double[vectorsArray.GetLength(0), vectorsArray.GetLength(1)];
 
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
-            {
-                for (int j = 0; j < Vectors.GetLength(1); ++j)
-                {
-                    Vectors[i, j] = vectorsArray[i, j];
-                }
-            }
+            Array.Copy(vectorsArray, vectors, vectors.Length);
         }
 
         public Matrix(Vector[] vectorsArray) : base(1)
         {
-            Vectors = new double[vectorsArray.GetLength(0), GetVectorMaxSize(vectorsArray)];
+            vectors = new double[vectorsArray.GetLength(0), GetVectorMaxSize(vectorsArray)];
 
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            for (int i = 0; i < vectors.GetLength(0); ++i)
             {
                 for (int j = 0; j < vectorsArray[i].GetSize(); ++j)
                 {
-                    Vectors[i, j] = vectorsArray[i].GetPoint(j);
+                    vectors[i, j] = vectorsArray[i].GetCoordinate(j);
                 }
             }
         }
 
         private int GetVectorMaxSize(Vector[] vectorsArray)
         {
-            int maxSize = 0;
+            int maxSize = 1;
 
-            for (int i = 0; i < vectorsArray.Length; ++i)
+            foreach (Vector vector in vectorsArray)
             {
-                if (vectorsArray[i].GetSize() > maxSize)
+                if (vector.GetSize() > maxSize)
                 {
-                    maxSize = vectorsArray[i].GetSize();
+                    maxSize = vector.GetSize();
                 }
             }
 
@@ -84,16 +69,16 @@ namespace Academits.Gudkov.MatrixTask
 
             Matrix matrix = (Matrix)obj;
 
-            if (Vectors.Length != matrix.Vectors.Length)
+            if (vectors.Length != matrix.vectors.Length)
             {
                 return false;
             }
 
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            for (int i = 0; i < vectors.GetLength(0); ++i)
             {
-                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                for (int j = 0; j < vectors.GetLength(1); ++j)
                 {
-                    if (Vectors[i, j] != matrix.Vectors[i, j])
+                    if (vectors[i, j] != matrix.vectors[i, j])
                     {
                         return false;
                     }
@@ -108,12 +93,9 @@ namespace Academits.Gudkov.MatrixTask
             int prime = 23;
             int hash = 1;
 
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            foreach (double vector in vectors)
             {
-                for (int j = 0; j < Vectors.GetLength(1); ++j)
-                {
-                    hash = prime * hash + Vectors[i, j].GetHashCode();
-                }
+                hash = prime * hash + vector.GetHashCode();
             }
 
             return hash;
@@ -121,57 +103,59 @@ namespace Academits.Gudkov.MatrixTask
 
         public override string ToString()
         {
-            StringBuilder matrixInfo = new StringBuilder("{");
+            StringBuilder stringBuilder = new StringBuilder("{");
 
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            for (int i = 0; i < vectors.GetLength(0); ++i)
             {
-                matrixInfo.Append('{');
+                stringBuilder.Append('{');
 
-                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                for (int j = 0; j < vectors.GetLength(1); ++j)
                 {
-                    matrixInfo.Append(Vectors[i, j]).Append(", ");
+                    stringBuilder.Append(vectors[i, j]).Append(", ");
                 }
 
-                matrixInfo.Remove(matrixInfo.Length - 2, 2).Append("}, ");
+                stringBuilder.Remove(stringBuilder.Length - 2, 2).Append("}, ");
             }
 
-            matrixInfo.Remove(matrixInfo.Length - 2, 2).Append('}');
+            stringBuilder.Remove(stringBuilder.Length - 2, 2).Append('}');
 
-            return matrixInfo.ToString();
+            return stringBuilder.ToString();
         }
 
-        public int GetSize(int x)
+        public int GetVectorCount()
         {
-            return Vectors.GetLength(x);
+            return vectors.GetLength(0);
         }
 
-        public Vector GetStringVector(int index)
+        public int GetVectorSize()
         {
-            Vector vector = new Vector(Vectors.GetLength(1));
-
-            for (int i = 0; i < Vectors.GetLength(1); ++i)
-            {
-                vector.SetPoint(i, Vectors[index, i]);
-            }
-
-            return vector;
+            return vectors.GetLength(1);
         }
 
-        public void SetVector(int index, Vector vector)
+        public Vector GetStringVector(int stringIndex)
+        {
+            double[] vector = new double[vectors.GetLength(1)];
+
+            Array.Copy(vectors, stringIndex, vector, 0, vector.Length);
+
+            return new Vector(vector);
+        }
+
+        public void SetVector(int stringIndex, Vector vector)
         {
             for (int i = 0; i < vector.GetSize(); ++i)
             {
-                Vectors[index, i] = vector.GetPoint(i);
+                vectors[stringIndex, i] = vector.GetCoordinate(i);
             }
         }
 
-        public Vector GetСolumnVector(int index)
+        public Vector GetСolumnVector(int columnIndex)
         {
-            Vector vector = new Vector(Vectors.GetLength(0));
+            Vector vector = new Vector(vectors.GetLength(0));
 
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            for (int i = 0; i < vectors.GetLength(0); ++i)
             {
-                vector.SetPoint(i, Vectors[i, index]);
+                vector.SetCoordinate(i, vectors[i, columnIndex]);
             }
 
             return vector;
@@ -179,40 +163,40 @@ namespace Academits.Gudkov.MatrixTask
 
         public void TransposeMatrix()
         {
-            Matrix matrix = new Matrix(Vectors.GetLength(1), Vectors.GetLength(0));
+            Matrix matrix = new Matrix(vectors.GetLength(1), vectors.GetLength(0));
 
-            for (int i = 0; i < Vectors.GetLength(1); ++i)
+            for (int i = 0; i < vectors.GetLength(1); ++i)
             {
-                for (int j = 0; j < Vectors.GetLength(0); ++j)
+                for (int j = 0; j < vectors.GetLength(0); ++j)
                 {
-                    matrix.Vectors[i, j] = Vectors[j, i];
+                    matrix.vectors[i, j] = vectors[j, i];
                 }
             }
 
-            Vectors = matrix.Vectors;
+            vectors = matrix.vectors;
         }
 
-        public void MultiplyByScalar(double scalar)
+        public override void MultiplyByScalar(double scalar)
         {
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            for (int i = 0; i < vectors.GetLength(0); ++i)
             {
-                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                for (int j = 0; j < vectors.GetLength(1); ++j)
                 {
-                    Vectors[i, j] *= scalar;
+                    vectors[i, j] *= scalar;
                 }
             }
         }
 
         public double GetDeterminant()
         {
-            Matrix matrix = new Matrix(Vectors);
+            Matrix matrix = new Matrix(vectors);
 
-            if (matrix.Vectors.GetLength(0) < 2)
+            if (matrix.vectors.GetLength(0) < 2)
             {
-                return matrix.Vectors[0, 0];
+                return matrix.vectors[0, 0];
             }
 
-            if (matrix.Vectors[0, 0] == 0)
+            if (matrix.vectors[0, 0] == 0)
             {
                 int basisMinorIndex = matrix.GetNonZeroBasisMinorIndex();
 
@@ -226,14 +210,14 @@ namespace Academits.Gudkov.MatrixTask
 
             matrix.SetColumnZero();
 
-            return matrix.Vectors[0, 0] * matrix.GetSubmatrix().GetDeterminant();
+            return matrix.vectors[0, 0] * matrix.GetSubmatrix().GetDeterminant();
         }
 
         private int GetNonZeroBasisMinorIndex()
         {
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            for (int i = 0; i < vectors.GetLength(0); ++i)
             {
-                if (Vectors[i, 0] != 0)
+                if (vectors[i, 0] != 0)
                 {
                     return i;
                 }
@@ -244,34 +228,34 @@ namespace Academits.Gudkov.MatrixTask
 
         private void SetBasisMinorInFirstLine(int i)
         {
-            for (int j = 0; j < Vectors.GetLength(1); ++j)
+            for (int j = 0; j < vectors.GetLength(1); ++j)
             {
-                Vectors[0, j] += Vectors[i, j];
+                vectors[0, j] += vectors[i, j];
             }
         }
 
         private void SetColumnZero()
         {
-            for (int i = 1; i < Vectors.GetLength(0); ++i)
+            for (int i = 1; i < vectors.GetLength(0); ++i)
             {
-                double itemCoefficient = -Vectors[i, 0] / (Vectors[0, 0]);
+                double itemCoefficient = -vectors[i, 0] / vectors[0, 0];
 
-                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                for (int j = 0; j < vectors.GetLength(1); ++j)
                 {
-                    Vectors[i, j] += itemCoefficient * Vectors[0, j];
+                    vectors[i, j] += itemCoefficient * vectors[0, j];
                 }
             }
         }
 
         private Matrix GetSubmatrix()
         {
-            Matrix matrix = new Matrix(Vectors.GetLength(0) - 1, Vectors.GetLength(1) - 1);
+            Matrix matrix = new Matrix(vectors.GetLength(0) - 1, vectors.GetLength(1) - 1);
 
-            for (int i = 0; i < matrix.Vectors.GetLength(0); ++i)
+            for (int i = 0; i < matrix.vectors.GetLength(0); ++i)
             {
-                for (int j = 0; j < matrix.Vectors.GetLength(1); ++j)
+                for (int j = 0; j < matrix.vectors.GetLength(1); ++j)
                 {
-                    matrix.Vectors[i, j] = Vectors[i + 1, j + 1];
+                    matrix.vectors[i, j] = vectors[i + 1, j + 1];
                 }
             }
 
@@ -280,113 +264,113 @@ namespace Academits.Gudkov.MatrixTask
 
         public void MultiplyByStringVector(Vector vector)
         {
-            if (Vectors.GetLength(0) == vector.Points.Length && Vectors.GetLength(1) == 1)
+            if (vectors.GetLength(0) == vector.GetSize() && vectors.GetLength(1) == 1)
             {
-                Matrix matrix = new Matrix(vector.Points.Length, vector.Points.Length);
+                Matrix matrix = new Matrix(vector.GetSize(), vector.GetSize());
 
-                for (int i = 0; i < matrix.Vectors.GetLength(0); ++i)
+                for (int i = 0; i < matrix.vectors.GetLength(0); ++i)
                 {
-                    for (int j = 0; j < matrix.Vectors.GetLength(1); ++j)
+                    for (int j = 0; j < matrix.vectors.GetLength(1); ++j)
                     {
-                        matrix.Vectors[i, j] = Vectors[i, j] * vector.Points[j];
+                        matrix.vectors[i, j] = vectors[i, j] * vector.GetCoordinate(j);
                     }
                 }
 
-                Vectors = matrix.Vectors;
+                vectors = matrix.vectors;
             }
             else
             {
-                Console.WriteLine($"Ошибка входных данных. Размер матрицы:{Vectors.GetLength(0)}x{Vectors.GetLength(1)}, размер вектора-строки: {vector.Points.Length}");
+                Console.WriteLine($"Ошибка входных данных. Размер матрицы: {vectors.GetLength(0)} x {vectors.GetLength(1)}, размер вектора-строки: {vector.GetSize()}");
             }
         }
 
         public void MultiplyByColumnVector(Vector vector)
         {
-            if (Vectors.GetLength(1) == vector.Points.Length)
+            if (vectors.GetLength(1) == vector.GetSize())
             {
-                Matrix matrix = new Matrix(vector.Points.Length, 1);
+                Matrix matrix = new Matrix(vector.GetSize(), 1);
 
-                for (int i = 0; i < Vectors.GetLength(0); ++i)
+                for (int i = 0; i < vectors.GetLength(0); ++i)
                 {
-                    for (int j = 0; j < Vectors.GetLength(1); ++j)
+                    for (int j = 0; j < vectors.GetLength(1); ++j)
                     {
-                        matrix.Vectors[i, 0] += Vectors[i, j] * vector.Points[j];
+                        matrix.vectors[i, 0] += vectors[i, j] * vector.GetCoordinate(j);
                     }
                 }
 
-                Vectors = matrix.Vectors;
+                vectors = matrix.vectors;
             }
             else
             {
-                Console.WriteLine($"Ошибка входных данных. Размер матрицы:{Vectors.GetLength(0)}x{Vectors.GetLength(1)}, размер вектора-столбца: {vector.Points.Length}"); ;
+                Console.WriteLine($"Ошибка входных данных. Размер матрицы: {vectors.GetLength(0)} x {vectors.GetLength(1)}, размер вектора-столбца: {vector.GetSize()}"); ;
             }
         }
 
-        public void AddMatrix(Matrix matrix)
+        public void Add(Matrix matrix)
         {
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            for (int i = 0; i < vectors.GetLength(0); ++i)
             {
-                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                for (int j = 0; j < vectors.GetLength(1); ++j)
                 {
-                    Vectors[i, j] += matrix.Vectors[i, j];
+                    vectors[i, j] += matrix.vectors[i, j];
                 }
             }
         }
 
-        public void SubtractMatrix(Matrix matrix)
+        public void Subtract(Matrix matrix)
         {
-            for (int i = 0; i < Vectors.GetLength(0); ++i)
+            for (int i = 0; i < vectors.GetLength(0); ++i)
             {
-                for (int j = 0; j < Vectors.GetLength(1); ++j)
+                for (int j = 0; j < vectors.GetLength(1); ++j)
                 {
-                    Vectors[i, j] -= matrix.Vectors[i, j];
+                    vectors[i, j] -= matrix.vectors[i, j];
                 }
             }
         }
 
-        public static Matrix GetMatrixSum(Matrix matrix1, Matrix matrix2)
+        public static Matrix GetSum(Matrix matrix1, Matrix matrix2)
         {
-            Matrix matrix = new Matrix(matrix1.Vectors.GetLength(0), matrix1.Vectors.GetLength(1));
+            Matrix matrix = new Matrix(matrix1.vectors.GetLength(0), matrix1.vectors.GetLength(1));
 
-            for (int i = 0; i < matrix.Vectors.GetLength(0); ++i)
+            for (int i = 0; i < matrix.vectors.GetLength(0); ++i)
             {
-                for (int j = 0; j < matrix.Vectors.GetLength(1); ++j)
+                for (int j = 0; j < matrix.vectors.GetLength(1); ++j)
                 {
-                    matrix.Vectors[i, j] = matrix1.Vectors[i, j] + matrix2.Vectors[i, j];
-                }
-            }
-
-            return matrix;
-        }
-
-        public static Matrix GetMatrixDifference(Matrix matrix1, Matrix matrix2)
-        {
-            Matrix matrix = new Matrix(matrix1.Vectors.GetLength(0), matrix1.Vectors.GetLength(1));
-
-            for (int i = 0; i < matrix.Vectors.GetLength(0); ++i)
-            {
-                for (int j = 0; j < matrix.Vectors.GetLength(1); ++j)
-                {
-                    matrix.Vectors[i, j] = matrix1.Vectors[i, j] - matrix2.Vectors[i, j];
+                    matrix.vectors[i, j] = matrix1.vectors[i, j] + matrix2.vectors[i, j];
                 }
             }
 
             return matrix;
         }
 
-        public static Matrix GetMatrixMultiply(Matrix matrix1, Matrix matrix2)
+        public static Matrix GetDifference(Matrix matrix1, Matrix matrix2)
         {
-            if (matrix1.Vectors.GetLength(1) == matrix2.Vectors.GetLength(0))
-            {
-                Matrix matrix = new Matrix(matrix1.Vectors.GetLength(0), matrix2.Vectors.GetLength(1));
+            Matrix matrix = new Matrix(matrix1.vectors.GetLength(0), matrix1.vectors.GetLength(1));
 
-                for (int i = 0; i < matrix1.Vectors.GetLength(0); ++i)
+            for (int i = 0; i < matrix.vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < matrix.vectors.GetLength(1); ++j)
                 {
-                    for (int j = 0; j < matrix2.Vectors.GetLength(1); ++j)
+                    matrix.vectors[i, j] = matrix1.vectors[i, j] - matrix2.vectors[i, j];
+                }
+            }
+
+            return matrix;
+        }
+
+        public static Matrix GetMultiplyResult(Matrix matrix1, Matrix matrix2)
+        {
+            if (matrix1.vectors.GetLength(1) == matrix2.vectors.GetLength(0))
+            {
+                Matrix matrix = new Matrix(matrix1.vectors.GetLength(0), matrix2.vectors.GetLength(1));
+
+                for (int i = 0; i < matrix1.vectors.GetLength(0); ++i)
+                {
+                    for (int j = 0; j < matrix2.vectors.GetLength(1); ++j)
                     {
-                        for (int k = 0; k < matrix2.Vectors.GetLength(0); ++k)
+                        for (int k = 0; k < matrix2.vectors.GetLength(0); ++k)
                         {
-                            matrix.Vectors[i, j] += matrix1.Vectors[i, k] * matrix2.Vectors[k, j];
+                            matrix.vectors[i, j] += matrix1.vectors[i, k] * matrix2.vectors[k, j];
                         }
                     }
                 }
@@ -394,11 +378,7 @@ namespace Academits.Gudkov.MatrixTask
                 return matrix;
             }
 
-            return null;
+            throw new ArgumentException($"Недопустимый аргумент: матрицы не согласованы. matrix1: = {{{matrix1.vectors.GetLength(0)} ,{matrix1.vectors.GetLength(1)}}}, matrix2: = {{{matrix2.vectors.GetLength(0)} ,{matrix2.vectors.GetLength(1)}}}");
         }
     }
 }
-
-/*
- 
- */
