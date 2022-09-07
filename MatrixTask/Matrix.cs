@@ -134,6 +134,11 @@ namespace Academits.Gudkov.MatrixTask
 
         public Vector GetStringVector(int stringIndex)
         {
+            if (stringIndex < 0 || stringIndex >= vectors.GetLength(0))
+            {
+                throw new IndexOutOfRangeException($"Индекс строки выходит за допустимый диапазон, получить вектор невозможно. Индекс строки: {stringIndex}) / Диапазон строк матрицы: ({0} : {vectors.GetLength(0) - 1})");
+            }
+
             Vector vector = new Vector(vectors.GetLength(1));
 
             for (int i = 0; i < vectors.GetLength(1); ++i)
@@ -146,6 +151,16 @@ namespace Academits.Gudkov.MatrixTask
 
         public void SetVector(int stringIndex, Vector vector)
         {
+            if (stringIndex < 0 || stringIndex >= vectors.GetLength(0))
+            {
+                throw new IndexOutOfRangeException($"Индекс строки выходит за допустимый диапазон, задать вектор невозможно. Индекс строки: {stringIndex}) / Диапазон строк матрицы: ({0} : {vectors.GetLength(0) - 1})");
+            }
+
+            if (vector.GetSize() > vectors.GetLength(1))
+            {
+                throw new IndexOutOfRangeException($"Размер вектора превышает размер матрицы, задать вектор невозможно. Размер вектора: {vector.GetSize()} / Размер матрицы: ({vectors.GetLength(0)} x {vectors.GetLength(1)})");
+            }
+
             for (int i = 0; i < vector.GetSize(); ++i)
             {
                 vectors[stringIndex, i] = vector.GetCoordinate(i);
@@ -154,6 +169,11 @@ namespace Academits.Gudkov.MatrixTask
 
         public Vector GetСolumnVector(int columnIndex)
         {
+            if (columnIndex < 0 || columnIndex >= vectors.GetLength(1))
+            {
+                throw new IndexOutOfRangeException($"Индекс столбца выходит за допустимый диапазон, получить вектор невозможно. Индекс столбца: {columnIndex}) / Диапазон столбцов матрицы: ({0} : {vectors.GetLength(1) - 1})");
+            }
+
             Vector vector = new Vector(vectors.GetLength(0));
 
             for (int i = 0; i < vectors.GetLength(0); ++i)
@@ -192,6 +212,11 @@ namespace Academits.Gudkov.MatrixTask
 
         public double GetDeterminant()
         {
+            if (vectors.GetLength(0) != vectors.GetLength(1))
+            {
+                throw new ArgumentException($"Матрица не квадратная, вычисление определителя невозможно. Размер матрицы: ({vectors.GetLength(0)} x {vectors.GetLength(1)})");
+            }
+
             Matrix matrix = new Matrix(vectors);
 
             if (matrix.vectors.GetLength(0) < 2)
@@ -267,50 +292,51 @@ namespace Academits.Gudkov.MatrixTask
 
         public void MultiplyByStringVector(Vector vector)
         {
-            if (vectors.GetLength(0) == vector.GetSize() && vectors.GetLength(1) == 1)
+            if (vectors.GetLength(0) != vector.GetSize() || vectors.GetLength(1) != 1)
             {
-                Matrix matrix = new Matrix(vector.GetSize(), vector.GetSize());
+                throw new ArgumentException($"Количество строк матрицы и размер вектора не совпадают, умножение на вектор невозможно. Размер матрицы: ({vectors.GetLength(0)} x {vectors.GetLength(1)}) / Размер вектора: ({vector.GetSize()})");
+            }
 
-                for (int i = 0; i < matrix.vectors.GetLength(0); ++i)
+            Matrix matrix = new Matrix(vector.GetSize(), vector.GetSize());
+
+            for (int i = 0; i < matrix.vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < matrix.vectors.GetLength(1); ++j)
                 {
-                    for (int j = 0; j < matrix.vectors.GetLength(1); ++j)
-                    {
-                        matrix.vectors[i, j] = vectors[i, 0] * vector.GetCoordinate(j);
-                    }
+                    matrix.vectors[i, j] = vectors[i, 0] * vector.GetCoordinate(j);
                 }
+            }
 
-                vectors = matrix.vectors;
-            }
-            else
-            {
-                Console.WriteLine($"Ошибка входных данных. Размер матрицы: {vectors.GetLength(0)} x {vectors.GetLength(1)}, размер вектора-строки: {vector.GetSize()}");
-            }
+            vectors = matrix.vectors;
         }
 
         public void MultiplyByColumnVector(Vector vector)
         {
-            if (vectors.GetLength(1) == vector.GetSize())
+            if (vectors.GetLength(1) != vector.GetSize())
             {
-                Matrix matrix = new Matrix(vector.GetSize(), 1);
+                throw new ArgumentException($"Количество столбцов матрицы и размер вектора не совпадают, умножение на вектор невозможно. Размер матрицы: ({vectors.GetLength(0)} x {vectors.GetLength(1)}) / Размер вектора: ({vector.GetSize()})");
+            }
 
-                for (int i = 0; i < vectors.GetLength(0); ++i)
+            Matrix matrix = new Matrix(vector.GetSize(), 1);
+
+            for (int i = 0; i < vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < vectors.GetLength(1); ++j)
                 {
-                    for (int j = 0; j < vectors.GetLength(1); ++j)
-                    {
-                        matrix.vectors[i, 0] += vectors[i, j] * vector.GetCoordinate(j);
-                    }
+                    matrix.vectors[i, 0] += vectors[i, j] * vector.GetCoordinate(j);
                 }
+            }
 
-                vectors = matrix.vectors;
-            }
-            else
-            {
-                Console.WriteLine($"Ошибка входных данных. Размер матрицы: {vectors.GetLength(0)} x {vectors.GetLength(1)}, размер вектора-столбца: {vector.GetSize()}"); ;
-            }
+            vectors = matrix.vectors;
         }
 
         public void Add(Matrix matrix)
         {
+            if (vectors.GetLength(0) != matrix.vectors.GetLength(0) || vectors.GetLength(1) != matrix.vectors.GetLength(1))
+            {
+                throw new ArgumentException($"Размеры матриц не совпадают, сложение невозможно. Размеры матриц: ({vectors.GetLength(0)} x {vectors.GetLength(1)}) / ({matrix.vectors.GetLength(0)} x {matrix.vectors.GetLength(1)})");
+            }
+
             for (int i = 0; i < vectors.GetLength(0); ++i)
             {
                 for (int j = 0; j < vectors.GetLength(1); ++j)
@@ -322,6 +348,11 @@ namespace Academits.Gudkov.MatrixTask
 
         public void Subtract(Matrix matrix)
         {
+            if (vectors.GetLength(0) != matrix.vectors.GetLength(0) || vectors.GetLength(1) != matrix.vectors.GetLength(1))
+            {
+                throw new ArgumentException($"Размеры матриц не совпадают, вычитание невозможно. Размеры матриц: ({vectors.GetLength(0)} x {vectors.GetLength(1)}) / ({matrix.vectors.GetLength(0)} x {matrix.vectors.GetLength(1)})");
+            }
+
             for (int i = 0; i < vectors.GetLength(0); ++i)
             {
                 for (int j = 0; j < vectors.GetLength(1); ++j)
@@ -333,6 +364,11 @@ namespace Academits.Gudkov.MatrixTask
 
         public static Matrix GetSum(Matrix matrix1, Matrix matrix2)
         {
+            if (matrix1.vectors.GetLength(0) != matrix2.vectors.GetLength(0) || matrix1.vectors.GetLength(1) != matrix2.vectors.GetLength(1))
+            {
+                throw new ArgumentException($"Размеры матриц не совпадают, сложение невозможно. Размеры матриц: ({matrix1.vectors.GetLength(0)} x {matrix1.vectors.GetLength(1)}) / ({matrix2.vectors.GetLength(0)} x {matrix2.vectors.GetLength(1)})");
+            }
+
             Matrix matrix = new Matrix(matrix1.vectors.GetLength(0), matrix1.vectors.GetLength(1));
 
             for (int i = 0; i < matrix.vectors.GetLength(0); ++i)
@@ -348,6 +384,11 @@ namespace Academits.Gudkov.MatrixTask
 
         public static Matrix GetDifference(Matrix matrix1, Matrix matrix2)
         {
+            if (matrix1.vectors.GetLength(0) != matrix2.vectors.GetLength(0) || matrix1.vectors.GetLength(1) != matrix2.vectors.GetLength(1))
+            {
+                throw new ArgumentException($"Размеры матриц не совпадают, вычитание невозможно. Размеры матриц: ({matrix1.vectors.GetLength(0)} x {matrix1.vectors.GetLength(1)}) / ({matrix2.vectors.GetLength(0)} x {matrix2.vectors.GetLength(1)})");
+            }
+
             Matrix matrix = new Matrix(matrix1.vectors.GetLength(0), matrix1.vectors.GetLength(1));
 
             for (int i = 0; i < matrix.vectors.GetLength(0); ++i)
@@ -363,25 +404,25 @@ namespace Academits.Gudkov.MatrixTask
 
         public static Matrix GetMultiplyResult(Matrix matrix1, Matrix matrix2)
         {
-            if (matrix1.vectors.GetLength(1) == matrix2.vectors.GetLength(0))
+            if (matrix1.vectors.GetLength(1) != matrix2.vectors.GetLength(0))
             {
-                Matrix matrix = new Matrix(matrix1.vectors.GetLength(0), matrix2.vectors.GetLength(1));
-
-                for (int i = 0; i < matrix1.vectors.GetLength(0); ++i)
-                {
-                    for (int j = 0; j < matrix2.vectors.GetLength(1); ++j)
-                    {
-                        for (int k = 0; k < matrix2.vectors.GetLength(0); ++k)
-                        {
-                            matrix.vectors[i, j] += matrix1.vectors[i, k] * matrix2.vectors[k, j];
-                        }
-                    }
-                }
-
-                return matrix;
+                throw new ArgumentException($"Матрицы не согласованы, число столбцов первой матрицы не равно числу строк второй матрицы, произведение невозможно. Размеры матриц: ({matrix1.vectors.GetLength(0)} x {matrix1.vectors.GetLength(1)}) / ({matrix2.vectors.GetLength(0)} x {matrix2.vectors.GetLength(1)})");
             }
 
-            throw new ArgumentException($"Недопустимый аргумент: матрицы не согласованы. matrix1: = {{{matrix1.vectors.GetLength(0)} ,{matrix1.vectors.GetLength(1)}}}, matrix2: = {{{matrix2.vectors.GetLength(0)} ,{matrix2.vectors.GetLength(1)}}}");
+            Matrix matrix = new Matrix(matrix1.vectors.GetLength(0), matrix2.vectors.GetLength(1));
+
+            for (int i = 0; i < matrix1.vectors.GetLength(0); ++i)
+            {
+                for (int j = 0; j < matrix2.vectors.GetLength(1); ++j)
+                {
+                    for (int k = 0; k < matrix2.vectors.GetLength(0); ++k)
+                    {
+                        matrix.vectors[i, j] += matrix1.vectors[i, k] * matrix2.vectors[k, j];
+                    }
+                }
+            }
+
+            return matrix;
         }
     }
 }
