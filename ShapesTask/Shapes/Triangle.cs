@@ -41,28 +41,25 @@ namespace Academits.Gudkov.ShapesTask.Shapes
             return pointsYArray.Max() - pointsYArray.Min();
         }
 
-        private double[] GetSidesLengths()
+        private static double GetSideLength(double x1, double y1, double x2, double y2)
         {
-            double abLength = Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y2 - Y1, 2));
-            double acLength = Math.Sqrt(Math.Pow(X3 - X1, 2) + Math.Pow(Y3 - Y1, 2));
-            double bcLength = Math.Sqrt(Math.Pow(X3 - X2, 2) + Math.Pow(Y3 - Y2, 2));
-
-            return new double[] { abLength, acLength, bcLength };
+            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
         }
 
         public double GetPerimeter()
         {
-            double[] sidesLengths = GetSidesLengths();
-
-            return sidesLengths[0] + sidesLengths[1] + sidesLengths[2];
+            return GetSideLength(X1, Y1, X2, Y2) + GetSideLength(X1, Y1, X3, Y3) + GetSideLength(X2, Y2, X3, Y3);
         }
 
         public double GetArea()
         {
-            double[] sidesLengths = GetSidesLengths();
-            double halfPerimeter = (sidesLengths[0] + sidesLengths[1] + sidesLengths[2]) / 2;
+            double sideLength1 = GetSideLength(X1, Y1, X2, Y2);
+            double sideLength2 = GetSideLength(X1, Y1, X3, Y3);
+            double sideLength3 = GetSideLength(X2, Y2, X3, Y3);
 
-            return Math.Sqrt(halfPerimeter * (halfPerimeter - sidesLengths[0]) * (halfPerimeter - sidesLengths[1]) * (halfPerimeter - sidesLengths[2]));
+            double halfPerimeter = (sideLength1 + sideLength2 + sideLength3) / 2;
+
+            return Math.Sqrt(halfPerimeter * (halfPerimeter - sideLength1) * (halfPerimeter - sideLength2) * (halfPerimeter - sideLength3));
         }
 
         public override string ToString()
