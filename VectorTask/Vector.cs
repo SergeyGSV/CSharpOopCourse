@@ -11,7 +11,7 @@ namespace Academits.Gudkov.VectorTask
         {
             if (vectorSize <= 0)
             {
-                throw new ArgumentException($"Недопустимый аргумент: размерность вектора (vectorSize) = {vectorSize}");
+                throw new ArgumentException($"Недопустимый аргумент: размерность вектора должна быть больше нуля (передана размерность {nameof(vectorSize)} = {vectorSize}");
             }
 
             coordinates = new double[vectorSize];
@@ -21,7 +21,7 @@ namespace Academits.Gudkov.VectorTask
         {
             if (vector is null)
             {
-                throw new ArgumentNullException("Недопустимый аргумент: ссылка на массив (vector) = null");
+                throw new ArgumentNullException($"Недопустимый аргумент: ссылка на вектор ({nameof(vector)}) = null");
             }
 
             coordinates = new double[vector.coordinates.Length];
@@ -33,12 +33,12 @@ namespace Academits.Gudkov.VectorTask
         {
             if (coordinatesArray is null)
             {
-                throw new ArgumentNullException("Недопустимый аргумент: ссылка на массив (coordinatesArray) = null");
+                throw new ArgumentNullException($"Недопустимый аргумент: ссылка на массив координат вектора ({nameof(coordinatesArray)}) = null");
             }
 
             if (coordinatesArray.Length == 0)
             {
-                throw new ArgumentException("Недопустимый аргумент: размер массива (coordinatesArray) = 0");
+                throw new ArgumentException($"Недопустимый аргумент: размер массива координат вектора должен быть больше нуля (размер переданного массива {nameof(coordinatesArray)} = {coordinatesArray.Length})");
             }
 
             coordinates = new double[coordinatesArray.Length];
@@ -50,19 +50,19 @@ namespace Academits.Gudkov.VectorTask
         {
             if (vectorSize <= 0)
             {
-                throw new ArgumentException($"Недопустимый аргумент: размерность вектора (vectorSize) = {vectorSize}");
+                throw new ArgumentException($"Недопустимый аргумент: размерность вектора должна быть больше нуля (передана размерность {nameof(vectorSize)} = {vectorSize}");
             }
 
             if (coordinatesArray is null)
             {
-                throw new ArgumentNullException("Недопустимый аргумент: ссылка на массив (coordinatesArray) = null");
+                throw new ArgumentNullException($"Недопустимый аргумент: ссылка на массив координат вектора ({nameof(coordinatesArray)}) = null");
             }
 
             coordinates = new double[vectorSize];
 
-            int elementsRange = (vectorSize < coordinatesArray.Length) ? vectorSize : coordinatesArray.Length;
+            int length = Math.Min(vectorSize, coordinatesArray.Length);
 
-            Array.Copy(coordinatesArray, coordinates, elementsRange);
+            Array.Copy(coordinatesArray, coordinates, length);
         }
 
         public int GetSize()
@@ -110,7 +110,7 @@ namespace Academits.Gudkov.VectorTask
             }
         }
 
-        public virtual void MultiplyByScalar(double scalar)
+        public void MultiplyByScalar(double scalar)
         {
             for (int i = 0; i < coordinates.Length; ++i)
             {
@@ -120,7 +120,7 @@ namespace Academits.Gudkov.VectorTask
 
         public void Reverse()
         {
-            this.MultiplyByScalar(-1);
+            MultiplyByScalar(-1);
         }
 
         public double GetLength()
@@ -139,7 +139,7 @@ namespace Academits.Gudkov.VectorTask
         {
             if (coordinateIndex < 0 || coordinateIndex >= coordinates.Length)
             {
-                throw new IndexOutOfRangeException($"Индекс координаты вектора (coordinateIndex = {coordinateIndex}) выходит за допустимые границы вектора ({0} : {coordinates.Length - 1})");
+                throw new IndexOutOfRangeException($"Индекс координаты вектора ({nameof(coordinateIndex)} = {coordinateIndex}) выходит за допустимые границы вектора (0 : {coordinates.Length - 1})");
             }
 
             return coordinates[coordinateIndex];
@@ -149,7 +149,7 @@ namespace Academits.Gudkov.VectorTask
         {
             if (coordinateIndex < 0 || coordinateIndex >= coordinates.Length)
             {
-                throw new IndexOutOfRangeException($"Индекс координаты вектора (coordinateIndex = {coordinateIndex}) выходит за допустимые границы вектора ({0} : {coordinates.Length - 1})");
+                throw new IndexOutOfRangeException($"Индекс координаты вектора ({nameof(coordinateIndex)} = {coordinateIndex}) выходит за допустимые границы вектора (0 : {coordinates.Length - 1})");
             }
 
             coordinates[coordinateIndex] = coordinate;
@@ -200,11 +200,11 @@ namespace Academits.Gudkov.VectorTask
 
         public static Vector GetSum(Vector vector1, Vector vector2)
         {
-            Vector summaryVector = new Vector(vector1);
+            Vector sumVector = new Vector(vector1);
 
-            summaryVector.Add(vector2);
+            sumVector.Add(vector2);
 
-            return summaryVector;
+            return sumVector;
         }
 
         public static Vector GetDifference(Vector vector1, Vector vector2)
@@ -216,18 +216,18 @@ namespace Academits.Gudkov.VectorTask
             return differenceVector;
         }
 
-        public static double GetScalarMultiplyResult(Vector vector1, Vector vector2)
+        public static double GetScalarMultiply(Vector vector1, Vector vector2)
         {
-            int minVectorSize = (vector1.coordinates.Length < vector2.coordinates.Length) ? vector1.coordinates.Length : vector2.coordinates.Length;
+            int minVectorSize = Math.Min(vector1.coordinates.Length, vector2.coordinates.Length);
 
-            double scalarMultiplyResult = 0;
+            double scalarMultiply = 0;
 
             for (int i = 0; i < minVectorSize; ++i)
             {
-                scalarMultiplyResult += vector1.coordinates[i] * vector2.coordinates[i];
+                scalarMultiply += vector1.coordinates[i] * vector2.coordinates[i];
             }
 
-            return scalarMultiplyResult;
+            return scalarMultiply;
         }
     }
 }

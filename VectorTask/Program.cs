@@ -13,13 +13,13 @@ namespace Academits.Gudkov.VectorTask
         {
             if (vectorsArray is null)
             {
-                Console.WriteLine("Печать невозможна: ссылка на массив (vectorsArray) = null");
+                Console.WriteLine($"Печать невозможна: ссылка на массив векторов ({nameof(vectorsArray)}) = null");
 
                 return;
             }
             else if (vectorsArray.Length == 0)
             {
-                Console.WriteLine("Печать невозможна: размер массива (vectorsArray) = 0");
+                Console.WriteLine($"Печать невозможна: размер массива векторов должен быть больше нуля (размер переданного массива {nameof(vectorsArray)} = {vectorsArray.Length})");
 
                 return;
             }
@@ -87,8 +87,9 @@ namespace Academits.Gudkov.VectorTask
             Console.WriteLine($"{vector3} - (Вычитание) {Environment.NewLine}");
 
             Console.WriteLine(vector4);
-            vector4.MultiplyByScalar(2);
-            Console.WriteLine($"{vector4} - (Умножение на 2) {Environment.NewLine}");
+            double scalar = 2;
+            vector4.MultiplyByScalar(scalar);
+            Console.WriteLine($"{vector4} - (Умножение на {scalar}) {Environment.NewLine}");
 
             Console.WriteLine(vector3);
             vector3.Reverse();
@@ -100,7 +101,7 @@ namespace Academits.Gudkov.VectorTask
             vector1.SetCoordinate(2, 1);
 
             double coordinate2 = vector1.GetCoordinate(2);
-            Console.WriteLine($"{vector1} - (Замена координаты ({coordinate1} -> {coordinate2}) {Environment.NewLine}");
+            Console.WriteLine($"{vector1} - (Замена координаты ({nameof(coordinate1)} = {coordinate1} -> {nameof(coordinate2)} = {coordinate2}) {Environment.NewLine}");
 
             Console.WriteLine($"Размерность и длина вектора3: {vector3.GetSize()} / {vector3.GetLength()} {Environment.NewLine}");
 
@@ -122,7 +123,7 @@ namespace Academits.Gudkov.VectorTask
 
             Console.WriteLine($"{vector1}");
             Console.WriteLine($"{vector3}");
-            Console.WriteLine($"{Vector.GetScalarMultiplyResult(vector1, vector3)} - (Умножение векторов, статический метод)");
+            Console.WriteLine($"{Vector.GetScalarMultiply(vector1, vector3)} - (Умножение векторов, статический метод)");
 
             Console.WriteLine($"исходный: {vector1}");
             Console.WriteLine($"исходный: {vector3} {Environment.NewLine}");
