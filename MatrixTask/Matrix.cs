@@ -7,7 +7,7 @@ namespace Academits.Gudkov.MatrixTask
     public class Matrix
     {
         //private double[,] vectors;
-        private Vector[,] vectors;
+        private Vector[] vectors;
 
         public Matrix(int rowsCount, int columnsCount)
         {
@@ -16,12 +16,19 @@ namespace Academits.Gudkov.MatrixTask
                 throw new ArgumentOutOfRangeException($"Недопустимый аргумент: размерности матрицы должны быть больше нуля, переданы размерности {nameof(rowsCount)} = {rowsCount}, {nameof(columnsCount)} = {columnsCount}");
             }
 
-            vectors = new Vector[rowsCount, columnsCount];
+            vectors = new Vector[rowsCount];
+
+            Vector vector = new Vector(columnsCount);
+
+            for (int i = 0; i < vectors.Length; ++i)
+            {
+                vectors[i].Add(vector);
+            }
         }
 
         public Matrix(Matrix vectorsMatrix)
         {
-            vectors = new Vector[vectorsMatrix.vectors.GetLength(0), vectorsMatrix.vectors.GetLength(1)];
+            vectors = new Vector[vectorsMatrix.vectors.Length];
 
             Array.Copy(vectorsMatrix.vectors, vectors, vectors.Length);
         }
@@ -38,9 +45,19 @@ namespace Academits.Gudkov.MatrixTask
                 throw new ArgumentException($"Недопустимый аргумент: размеры массива должны быть больше нуля, передан массив {nameof(vectorsArray)} размером: {vectorsArray.GetLength(0)} x {vectorsArray.GetLength(1)}");
             }
 
-            vectors = new Vector[vectorsArray.GetLength(0), vectorsArray.GetLength(1)];
+            vectors = new Vector[vectorsArray.GetLength(0)];
 
-            Array.Copy(vectorsArray, vectors, vectors.Length);
+            Vector vector = new Vector(vectorsArray.GetLength(1));
+
+            for (int i = 0; i < vectorsArray.GetLength(0); ++i)
+            {
+                for (int j = 0, k = 0; j < vectorsArray.GetLength(1); ++j, ++k)
+                {
+                    vector.SetCoordinate(k, vectorsArray[i, j]);
+                }
+
+                vectors[i].Add(vector);
+            }
         }
 
         public Matrix(Vector[] vectorsArray)
@@ -55,13 +72,13 @@ namespace Academits.Gudkov.MatrixTask
                 throw new ArgumentException($"Недопустимый аргумент: размерность вектора должна быть больше нуля, передан вектор {nameof(vectorsArray)} размером: {vectorsArray.Length}");
             }
 
-            vectors = new Vector[vectorsArray.Length, GetMaxVectorSize(vectorsArray)];
+            vectors = new Vector[GetMaxVectorSize(vectorsArray)];
 
-            for (int i = 0; i < vectors.GetLength(0); ++i)
+            for (int i = 0; i < vectors.Length; ++i)
             {
                 for (int j = 0; j < vectorsArray[i].GetSize(); ++j)
                 {
-                    vectors[i, j] = vectorsArray[i].GetCoordinate(j);
+                    vectors[i].SetCoordinate(j, vectorsArray[i].GetCoordinate(j));
                 }
             }
         }
