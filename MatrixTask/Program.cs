@@ -52,7 +52,7 @@ namespace Academits.Gudkov.MatrixTask
             Matrix matrix2 = new Matrix(matrix1);
 
             Console.WriteLine(matrix2);
-            Console.WriteLine($"Размер матрицы 2: {matrix2.GetStringCount()} x {matrix2.GetColumnCount()} {Environment.NewLine}");
+            Console.WriteLine($"Размер матрицы 2: {matrix2.GetRowsCount()} x {matrix2.GetColumnsCount()} {Environment.NewLine}");
 
             double[,] vectorsArray1 =
            {
@@ -65,8 +65,8 @@ namespace Academits.Gudkov.MatrixTask
 
             Console.WriteLine($"{matrix3} - исходная матрица");
 
-            Console.WriteLine($"{matrix3.GetStringVector(1)} - вектор-строки матрицы 3");
-            Console.WriteLine($"{matrix3.GetСolumnVector(1)} - вектор-столбца матрицы 3 {Environment.NewLine}");
+            Console.WriteLine($"{matrix3.GetRow(1)} - вектор-строки матрицы 3");
+            Console.WriteLine($"{matrix3.GetColumn(1)} - вектор-столбца матрицы 3 {Environment.NewLine}");
 
             Vector[] vectorsArray2 =
             {
@@ -82,7 +82,7 @@ namespace Academits.Gudkov.MatrixTask
 
             Console.WriteLine($"{matrix4} - исходная матрица");
 
-            matrix4.SetVector(2, vector1);
+            matrix4.SetRow(2, vector1);
 
             Console.WriteLine($"{matrix4} - задан вектор-строка {vector1} по индексу 2 {Environment.NewLine}");
 
@@ -97,7 +97,7 @@ namespace Academits.Gudkov.MatrixTask
 
             Console.WriteLine($"{matrix5} - исходная матрица");
 
-            matrix5.TransposeMatrix();
+            matrix5.Transpose();
 
             Console.WriteLine($"{matrix5} - транспонированная матрица");
 
@@ -137,14 +137,8 @@ namespace Academits.Gudkov.MatrixTask
             Matrix matrix7 = new Matrix(vectorsArray6);
             Vector vector2 = new Vector(new double[] { 2, 2, 2 });
 
-            Console.WriteLine($"{matrix7} - исходная матрица");
-
-            matrix7.MultiplyByStringVector(new Vector(vector2));
-
-            Console.WriteLine($"{matrix7} - умножение на вектор-строку {vector2} {Environment.NewLine}");
-
             double[,] vectorsArray7 =
-            {
+{
                 { 1, 1, 1 },
                 { 1, 1, 1 },
                 { 1, 1, 1 }
@@ -226,7 +220,7 @@ namespace Academits.Gudkov.MatrixTask
             Console.WriteLine($"{matrix11} - исходная матрица");
             Console.WriteLine($"{matrix12} - исходная матрица");
 
-            matrix13 = Matrix.GetMultiplyResult(matrix11, matrix12);
+            matrix13 = Matrix.GetMultiply(matrix11, matrix12);
 
             Console.WriteLine($"{matrix13} - результат умножения, статический метод {Environment.NewLine}");
 
