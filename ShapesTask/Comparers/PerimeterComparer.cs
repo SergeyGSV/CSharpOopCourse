@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Academits.Gudkov.ShapesTask.Shapes;
 
-namespace Academits.Gudkov.ShapesTask.Comparer
+namespace Academits.Gudkov.ShapesTask.Comparers
 {
     class PerimeterComparer : IComparer<IShape>
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using Academits.Gudkov.ShapesTask.Comparer;
+using Academits.Gudkov.ShapesTask.Comparers;
 using Academits.Gudkov.ShapesTask.Shapes;
 
 namespace Academits.Gudkov.ShapesTask
@@ -10,7 +10,7 @@ namespace Academits.Gudkov.ShapesTask
         {
             if (shapes.Length == 0)
             {
-                throw new ArgumentException("Массив не может быть пуст");
+                throw new ArgumentException($"Массив {nameof(shapes)} не может быть пуст");
             }
 
             Array.Sort(shapes, new AreaComparer());
@@ -22,7 +22,7 @@ namespace Academits.Gudkov.ShapesTask
         {
             if (shapes.Length < 2)
             {
-                throw new ArgumentException("Массив должен содержать минимум две фигуры");
+                throw new ArgumentException($"Массив {nameof(shapes)} должен содержать минимум две фигуры");
             }
 
             Array.Sort(shapes, new PerimeterComparer());
