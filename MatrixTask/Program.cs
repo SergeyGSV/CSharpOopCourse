@@ -48,6 +48,55 @@ namespace Academits.Gudkov.MatrixTask
 
         static void Main(string[] args)
         {
+
+            double[,] vectorsArray1 =
+           {
+                { 0, 3, -1, 2, 6 },
+                { 2, 1, 0, 0, 3 },
+                { -2, -1, 0, 2, 5 },
+                { -5, 7, 1, 1, 1 },
+                { 2, 0, 2, -2, 1 }
+            };
+
+            double[,] vectorsArray2 =
+            {
+                { 0, 1, -2 },
+                { -1, 2, 3 },
+                { 2, 3, 4 },
+            };
+
+            Matrix matrix1 = new Matrix(vectorsArray1);
+            Matrix matrix2 = new Matrix(vectorsArray2);
+
+            Console.WriteLine($"{matrix1} - исходная матрица");
+            Console.WriteLine($"{matrix2} - исходная матрица");
+
+            Console.WriteLine($"{matrix1.GetDeterminant():f2} - определитель матрицы {Environment.NewLine}");
+            Console.WriteLine($"{matrix2.GetDeterminant():f2} - определитель матрицы {Environment.NewLine}");
+            /*
+
+            Vector[] vectorsArray2 =
+            {
+                new Vector(new double[] { 1, 1, 1, 1, 1, 1 }),
+                new Vector(new double[] { 1, 1, 1, 1, 1, 1 }),
+                new Vector(new double[] { 1, 1, 1 }),
+                new Vector(new double[] { 1, 1, 1, 1, 1, 1 }),
+                new Vector(new double[] { 1, 1, 1, 1, 1, 1 })
+            };
+
+            Matrix matrix4 = new Matrix(vectorsArray2);
+
+            Matrix matrix5 = new Matrix(matrix4);
+
+            Console.WriteLine(matrix4.GetRowsCount() + "x" + matrix4.GetColumnsCount());
+
+            Console.WriteLine(matrix2);
+            matrix2.MultiplyByVector(new Vector(new double[] { 1, 1, 1, 1 }));
+
+            Console.WriteLine(matrix2.MultiplyByVector(new Vector(new double[] { 1, 1, 1, 1 })));
+
+            //Console.WriteLine(matrix4);
+            /*
             Matrix matrix1 = new Matrix(5, 5);
             Matrix matrix2 = new Matrix(matrix1);
 
@@ -244,7 +293,7 @@ namespace Academits.Gudkov.MatrixTask
             PrintComparisonResult(matrixArray);
             Console.WriteLine();
 
-            PrintHashCodes(matrixArray);
+            PrintHashCodes(matrixArray);*/
         }
     }
 }
