@@ -14,14 +14,14 @@ namespace Academits.Gudkov.MatrixTask
         {
             if (matrixArray is null)
             {
-                Console.WriteLine("Печать невозможна: ссылка на массив (matrixArray) = null");
+                Console.WriteLine($"Печать невозможна: ссылка на массив {nameof(matrixArray)} = null");
 
                 return;
             }
 
             if (matrixArray.Length == 0)
             {
-                Console.WriteLine("Печать невозможна: размер массива (matrixArray) = 0");
+                Console.WriteLine($"Печать невозможна: размер массива {nameof(matrixArray)} = 0");
 
                 return;
             }
@@ -48,60 +48,11 @@ namespace Academits.Gudkov.MatrixTask
 
         static void Main(string[] args)
         {
-
-            double[,] vectorsArray1 =
-           {
-                { 0, 3, -1, 2, 6 },
-                { 2, 1, 0, 0, 3 },
-                { -2, -1, 0, 2, 5 },
-                { -5, 7, 1, 1, 1 },
-                { 2, 0, 2, -2, 1 }
-            };
-
-            double[,] vectorsArray2 =
-            {
-                { 0, 1, -2 },
-                { -1, 2, 3 },
-                { 2, 3, 4 },
-            };
-
-            Matrix matrix1 = new Matrix(vectorsArray1);
-            Matrix matrix2 = new Matrix(vectorsArray2);
-
-            Console.WriteLine($"{matrix1} - исходная матрица");
-            Console.WriteLine($"{matrix2} - исходная матрица");
-
-            Console.WriteLine($"{matrix1.GetDeterminant():f2} - определитель матрицы {Environment.NewLine}");
-            Console.WriteLine($"{matrix2.GetDeterminant():f2} - определитель матрицы {Environment.NewLine}");
-            /*
-
-            Vector[] vectorsArray2 =
-            {
-                new Vector(new double[] { 1, 1, 1, 1, 1, 1 }),
-                new Vector(new double[] { 1, 1, 1, 1, 1, 1 }),
-                new Vector(new double[] { 1, 1, 1 }),
-                new Vector(new double[] { 1, 1, 1, 1, 1, 1 }),
-                new Vector(new double[] { 1, 1, 1, 1, 1, 1 })
-            };
-
-            Matrix matrix4 = new Matrix(vectorsArray2);
-
-            Matrix matrix5 = new Matrix(matrix4);
-
-            Console.WriteLine(matrix4.GetRowsCount() + "x" + matrix4.GetColumnsCount());
-
-            Console.WriteLine(matrix2);
-            matrix2.MultiplyByVector(new Vector(new double[] { 1, 1, 1, 1 }));
-
-            Console.WriteLine(matrix2.MultiplyByVector(new Vector(new double[] { 1, 1, 1, 1 })));
-
-            //Console.WriteLine(matrix4);
-            /*
             Matrix matrix1 = new Matrix(5, 5);
             Matrix matrix2 = new Matrix(matrix1);
 
             Console.WriteLine(matrix2);
-            Console.WriteLine($"Размер матрицы 2: {matrix2.GetRowsCount()} x {matrix2.GetColumnsCount()} {Environment.NewLine}");
+            Console.WriteLine($"Размер матрицы 2: {matrix2.RowsCount} x {matrix2.ColumnsCount} {Environment.NewLine}");
 
             double[,] vectorsArray1 =
            {
@@ -112,16 +63,16 @@ namespace Academits.Gudkov.MatrixTask
 
             Matrix matrix3 = new Matrix(vectorsArray1);
 
-            Console.WriteLine($"{matrix3} - исходная матрица");
+            Console.WriteLine($"{matrix3} - исходная матрица {nameof(matrix3)}");
 
-            Console.WriteLine($"{matrix3.GetRow(1)} - вектор-строки матрицы 3");
-            Console.WriteLine($"{matrix3.GetColumn(1)} - вектор-столбца матрицы 3 {Environment.NewLine}");
+            Console.WriteLine($"{matrix3.GetRow(1)} - вектор-строки матрицы {nameof(matrix3)}");
+            Console.WriteLine($"{matrix3.GetColumn(1)} - вектор-столбца матрицы {nameof(matrix3)} {Environment.NewLine}");
 
             Vector[] vectorsArray2 =
             {
                 new Vector(new double[] { 1, 1, 1, 1, 1 }),
                 new Vector(new double[] { 1, 1, 1, 1, 1 }),
-                new Vector(new double[] { 1, 1, 1, 1, 1 }),
+                new Vector(new double[] { 1, 1, 1 }),
                 new Vector(new double[] { 1, 1, 1, 1, 1 }),
                 new Vector(new double[] { 1, 1, 1, 1, 1 })
             };
@@ -129,11 +80,11 @@ namespace Academits.Gudkov.MatrixTask
             Matrix matrix4 = new Matrix(vectorsArray2);
             Vector vector1 = new Vector(new double[] { 0, 0, 0, 0, 0 });
 
-            Console.WriteLine($"{matrix4} - исходная матрица");
+            Console.WriteLine($"{matrix4} - исходная матрица {nameof(matrix4)}");
 
             matrix4.SetRow(2, vector1);
 
-            Console.WriteLine($"{matrix4} - задан вектор-строка {vector1} по индексу 2 {Environment.NewLine}");
+            Console.WriteLine($"{matrix4} - задан вектор-строка {nameof(vector1)}: {vector1} по индексу 2 матрицы {nameof(matrix4)} {Environment.NewLine}");
 
             double[,] vectorsArray3 =
 {
@@ -144,15 +95,15 @@ namespace Academits.Gudkov.MatrixTask
 
             Matrix matrix5 = new Matrix(vectorsArray3);
 
-            Console.WriteLine($"{matrix5} - исходная матрица");
+            Console.WriteLine($"{matrix5} - исходная матрица {nameof(matrix5)}");
 
             matrix5.Transpose();
 
-            Console.WriteLine($"{matrix5} - транспонированная матрица");
+            Console.WriteLine($"{matrix5} - транспонированная матрица {nameof(matrix5)}");
 
             matrix5.MultiplyByScalar(2);
 
-            Console.WriteLine($"{matrix5} - результат умножения на скаляр (2) {Environment.NewLine}");
+            Console.WriteLine($"{matrix5} - результат умножения матрицы {nameof(matrix5)} на скаляр (2) {Environment.NewLine}");
 
             double[,] vectorsArray4 =
             {
@@ -167,14 +118,14 @@ namespace Academits.Gudkov.MatrixTask
             {
                 { 0, 1, -2 },
                 { -1, 2, 3 },
-                { 2, 3, 4 },
+                { 2, 3, 4 }
             };
 
             Matrix matrix6 = new Matrix(vectorsArray4);
 
-            Console.WriteLine($"{matrix6} - исходная матрица");
+            Console.WriteLine($"{matrix6} - исходная матрица {nameof(matrix6)}");
 
-            Console.WriteLine($"{matrix6.GetDeterminant():f2} - определитель матрицы {Environment.NewLine}");
+            Console.WriteLine($"{matrix6.GetDeterminant():f2} - определитель матрицы {nameof(matrix6)} {Environment.NewLine}");
 
             double[,] vectorsArray6 =
 {
@@ -196,11 +147,11 @@ namespace Academits.Gudkov.MatrixTask
             Matrix matrix8 = new Matrix(vectorsArray7);
             Vector vector3 = new Vector(new double[] { 2, 2, 2 });
 
-            Console.WriteLine($"{matrix8} - исходная матрица");
+            Console.WriteLine($"{matrix8} - исходная матрица {nameof(matrix8)}");
 
-            matrix8.MultiplyByColumnVector(vector3);
+            matrix8.MultiplyByVector(vector3);
 
-            Console.WriteLine($"{matrix8} - умножение на вектор-столбец {vector3} {Environment.NewLine}");
+            Console.WriteLine($"{matrix8} - умножение матрицы {nameof(matrix8)} на вектор-столбец {nameof(vector3)}: {vector3} {Environment.NewLine}");
 
             double[,] vectorsArray8 =
             {
@@ -219,19 +170,19 @@ namespace Academits.Gudkov.MatrixTask
             Matrix matrix9 = new Matrix(vectorsArray8);
             Matrix matrix10 = new Matrix(vectorsArray9);
 
-            Console.WriteLine($"{matrix9} - исходная матрица");
-            Console.WriteLine($"{matrix10} - исходная матрица");
+            Console.WriteLine($"{matrix9} - исходная матрица {nameof(matrix9)}");
+            Console.WriteLine($"{matrix10} - исходная матрица {nameof(matrix10)}");
 
             matrix9.Add(matrix10);
 
-            Console.WriteLine($"{matrix9} - результат сложения {Environment.NewLine}");
+            Console.WriteLine($"{matrix9} - результат сложения - {nameof(matrix9)} {Environment.NewLine}");
 
-            Console.WriteLine($"{matrix9} - исходная матрица");
-            Console.WriteLine($"{matrix10} - исходная матрица");
+            Console.WriteLine($"{matrix9} - исходная матрица {nameof(matrix9)}");
+            Console.WriteLine($"{matrix10} - исходная матрица {nameof(matrix10)}");
 
             matrix9.Subtract(matrix10);
 
-            Console.WriteLine($"{matrix9} - результат вычитания {Environment.NewLine}");
+            Console.WriteLine($"{matrix9} - результат вычитания - {nameof(matrix9)} {Environment.NewLine}");
 
             double[,] vectorsArray10 =
            {
@@ -252,26 +203,26 @@ namespace Academits.Gudkov.MatrixTask
 
             Matrix matrix13 = new Matrix(1, 2);
 
-            Console.WriteLine($"{matrix11} - исходная матрица");
-            Console.WriteLine($"{matrix12} - исходная матрица");
+            Console.WriteLine($"{matrix11} - исходная матрица {nameof(matrix11)}");
+            Console.WriteLine($"{matrix12} - исходная матрица {nameof(matrix12)}");
 
             matrix13 = Matrix.GetSum(matrix11, matrix12);
 
-            Console.WriteLine($"{matrix13} - результат сложения, статический метод {Environment.NewLine}");
+            Console.WriteLine($"{matrix13} - результат сложения, статический метод - {nameof(matrix13)} {Environment.NewLine}");
 
-            Console.WriteLine($"{matrix13} - исходная матрица");
-            Console.WriteLine($"{matrix11} - исходная матрица");
+            Console.WriteLine($"{matrix13} - исходная матрица {nameof(matrix13)}");
+            Console.WriteLine($"{matrix11} - исходная матрица {nameof(matrix11)}");
 
             matrix13 = Matrix.GetDifference(matrix13, matrix11);
 
-            Console.WriteLine($"{matrix13} - результат вычитания, статический метод {Environment.NewLine}");
+            Console.WriteLine($"{matrix13} - результат вычитания, статический метод - {nameof(matrix13)} {Environment.NewLine}");
 
-            Console.WriteLine($"{matrix11} - исходная матрица");
-            Console.WriteLine($"{matrix12} - исходная матрица");
+            Console.WriteLine($"{matrix11} - исходная матрица {nameof(matrix11)}");
+            Console.WriteLine($"{matrix12} - исходная матрица {nameof(matrix12)}");
 
             matrix13 = Matrix.GetMultiply(matrix11, matrix12);
 
-            Console.WriteLine($"{matrix13} - результат умножения, статический метод {Environment.NewLine}");
+            Console.WriteLine($"{matrix13} - результат умножения, статический метод - {nameof(matrix13)} {Environment.NewLine}");
 
             Matrix[] matrixArray =
             {
@@ -291,9 +242,10 @@ namespace Academits.Gudkov.MatrixTask
             };
 
             PrintComparisonResult(matrixArray);
+
             Console.WriteLine();
 
-            PrintHashCodes(matrixArray);*/
+            PrintHashCodes(matrixArray);
         }
     }
 }
