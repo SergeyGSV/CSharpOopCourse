@@ -12,12 +12,12 @@ namespace Academits.Gudkov.MatrixTask
         {
             if (rowsCount <= 0 || columnsCount <= 0)
             {
-                throw new ArgumentOutOfRangeException($"Недопустимый аргумент: размерности матрицы должны быть больше нуля, переданы размерности {nameof(rowsCount)} = {rowsCount}, {nameof(columnsCount)} = {columnsCount}");
+                throw new ArgumentOutOfRangeException($"Ошибка: Размеры матрицы векторов должны быть больше нуля. Переданы размеры {nameof(rowsCount)} = {rowsCount}, {nameof(columnsCount)} = {columnsCount}");
             }
 
             vectors = new Vector[rowsCount];
 
-            for (int i = 0; i < vectors.Length; ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
                 vectors[i] = new Vector(columnsCount);
             }
@@ -27,30 +27,30 @@ namespace Academits.Gudkov.MatrixTask
         {
             vectors = new Vector[vectorsMatrix.vectors.Length];
 
-            Array.Copy(vectorsMatrix.vectors, vectors, vectors.Length);
+            Array.Copy(vectorsMatrix.vectors, vectors, GetRowsCount());
         }
 
-        public Matrix(double[,] vectorsArray)
+        public Matrix(double[,] vectorsCoordinatesArray)
         {
-            if (vectorsArray is null)
+            if (vectorsCoordinatesArray is null)
             {
-                throw new ArgumentNullException($"Недопустимый аргумент: ссылка на массив ({nameof(vectorsArray)}) = null");
+                throw new ArgumentNullException($"Ошибка: Ссылка на массив ({nameof(vectorsCoordinatesArray)}) = null");
             }
 
-            if (vectorsArray.Length == 0)
+            if (vectorsCoordinatesArray.Length == 0)
             {
-                throw new ArgumentException($"Недопустимый аргумент: размеры массива должны быть больше нуля, передан массив {nameof(vectorsArray)} размером: {vectorsArray.GetLength(0)} x {vectorsArray.GetLength(1)}");
+                throw new ArgumentException($"Ошибка: Размеры массива координат векторов должны быть больше нуля. Переданы размеры массива ({nameof(vectorsCoordinatesArray)}): {vectorsCoordinatesArray.GetLength(0)} x {vectorsCoordinatesArray.GetLength(1)}");
             }
 
-            vectors = new Vector[vectorsArray.GetLength(0)];
+            vectors = new Vector[vectorsCoordinatesArray.GetLength(0)];
 
-            for (int i = 0; i < vectorsArray.GetLength(0); ++i)
+            for (int i = 0; i < vectorsCoordinatesArray.GetLength(0); ++i)
             {
-                Vector vector = new Vector(vectorsArray.GetLength(1));
+                Vector vector = new Vector(vectorsCoordinatesArray.GetLength(1));
 
-                for (int j = 0, k = 0; j < vectorsArray.GetLength(1); ++j, ++k)
+                for (int j = 0, k = 0; j < vectorsCoordinatesArray.GetLength(1); ++j, ++k)
                 {
-                    vector.SetCoordinate(k, vectorsArray[i, j]);
+                    vector.SetCoordinate(k, vectorsCoordinatesArray[i, j]);
                 }
 
                 vectors[i] = vector;
@@ -61,17 +61,17 @@ namespace Academits.Gudkov.MatrixTask
         {
             if (vectorsArray is null)
             {
-                throw new ArgumentNullException($"Недопустимый аргумент: ссылка на вектор ({nameof(vectorsArray)}) = null");
+                throw new ArgumentNullException($"Ошибка: ссылка на массив векторов ({nameof(vectorsArray)}) = null");
             }
 
             if (vectorsArray.Length == 0)
             {
-                throw new ArgumentException($"Недопустимый аргумент: размерность вектора должна быть больше нуля, передан вектор {nameof(vectorsArray)} размером: {vectorsArray.Length}");
+                throw new ArgumentException($"Ошибка: Размер массива векторов должен быть больше нуля. Передан размер массива ({nameof(vectorsArray)}): {vectorsArray.Length}");
             }
 
             vectors = new Vector[vectorsArray.Length];
 
-            for (int i = 0; i < vectors.Length; ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
                 Vector vector = new Vector(GetMaxVectorSize(vectorsArray));
 
@@ -113,12 +113,12 @@ namespace Academits.Gudkov.MatrixTask
 
             Matrix matrix = (Matrix)obj;
 
-            if (vectors.Length != matrix.vectors.Length)
+            if (GetRowsCount() != matrix.GetRowsCount())
             {
                 return false;
             }
 
-            for (int i = 0; i < vectors.Length; ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
                 for (int j = 0; j < vectors[i].GetSize(); ++j)
                 {
@@ -149,7 +149,7 @@ namespace Academits.Gudkov.MatrixTask
         {
             StringBuilder stringBuilder = new StringBuilder("{");
 
-            for (int i = 0; i < vectors.Length; ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
                 stringBuilder.Append('{');
 
@@ -178,17 +178,17 @@ namespace Academits.Gudkov.MatrixTask
 
         private void CheckRowIndex(int index)
         {
-            if (index < 0 || index >= vectors.Length)
+            if (index < 0 || index >= GetRowsCount())
             {
-                throw new IndexOutOfRangeException($"Индекс выходит за допустимый диапазон. {nameof(index)} = {index}. Допустимый диапазон: 0 - {vectors.Length - 1}");
+                throw new IndexOutOfRangeException($"Ошибка: Индекс строки выходит за допустимый диапазон матрицы векторов. Передан {nameof(index)} = {index}. Допустимый диапазон: 0 - {GetRowsCount() - 1}. Текущие размеры матрицы: {GetRowsCount()} x {GetColumnsCount()}");
             }
         }
 
         private void CheckColumnIndex(int index)
         {
-            if (index < 0 || index >= vectors[0].GetSize())
+            if (index < 0 || index >= GetColumnsCount())
             {
-                throw new IndexOutOfRangeException($"Индекс выходит за допустимый диапазон. {nameof(index)} = {index}. Допустимый диапазон: 0 - {vectors[0].GetSize() - 1}");
+                throw new IndexOutOfRangeException($"Ошибка: Индекс столбца выходит за допустимый диапазон матрицы векторов. Передан {nameof(index)} = {index}. Допустимый диапазон: 0 - {GetColumnsCount() - 1}. Текущие размеры матрицы: {GetRowsCount()} x {GetColumnsCount()}");
             }
         }
 
@@ -203,9 +203,9 @@ namespace Academits.Gudkov.MatrixTask
         {
             CheckRowIndex(rowIndex);
 
-            if (vector.GetSize() != vectors.GetLength(1))
+            if (vector.GetSize() != GetColumnsCount())
             {
-                throw new IndexOutOfRangeException($"Размер вектора не равен размеру матрицы векторов, задать вектор невозможно. Размер вектора: {vector.GetSize()}. Размер матрицы векторов: {vectors.GetLength(0)} x {vectors.GetLength(1)}");
+                throw new IndexOutOfRangeException($"Ошибка: Размерность вектора должна быть равна количеству столбцов матрицы векторов. Передана размерность вектора ({nameof(vector)}): {vector.GetSize()}. Переданы размеры матрицы: {GetRowsCount()} x {GetColumnsCount()}");
             }
 
             for (int i = 0; i < vector.GetSize(); ++i)
@@ -218,9 +218,9 @@ namespace Academits.Gudkov.MatrixTask
         {
             CheckColumnIndex(columnIndex);
 
-            Vector vector = new Vector(vectors.Length);
+            Vector vector = new Vector(GetRowsCount());
 
-            for (int i = 0; i < vectors.Length; ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
                 vector.SetCoordinate(i, vectors[i].GetCoordinate(columnIndex));
             }
@@ -230,9 +230,9 @@ namespace Academits.Gudkov.MatrixTask
 
         public void Transpose()
         {
-            Matrix matrix = new Matrix(vectors[0].GetSize(), vectors.Length);
+            Matrix matrix = new Matrix(GetColumnsCount(), GetRowsCount());
 
-            for (int i = 0; i < matrix.vectors.Length; ++i)
+            for (int i = 0; i < matrix.GetRowsCount(); ++i)
             {
                 matrix.vectors[i] = GetColumn(i);
             }
@@ -242,7 +242,7 @@ namespace Academits.Gudkov.MatrixTask
 
         public void MultiplyByScalar(double scalar)
         {
-            for (int i = 0; i < vectors.Length; ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
                 vectors[i].MultiplyByScalar(scalar);
             }
@@ -250,14 +250,14 @@ namespace Academits.Gudkov.MatrixTask
 
         public double GetDeterminant()
         {
-            if (vectors.Length != vectors[0].GetSize())
+            if (GetRowsCount() != GetColumnsCount())
             {
-                throw new InvalidOperationException($"Матрица векторов не квадратная, вычисление определителя невозможно. Размер матрицы: {vectors.Length} x {vectors[0].GetSize()}");
+                throw new InvalidOperationException($"Ошибка: Матрица векторов должна быть квадратной. Переданы размеры матрицы: {GetRowsCount()} x {GetColumnsCount()}");
             }
 
             Matrix matrix = new Matrix(vectors);
 
-            if (matrix.vectors.GetLength(0) < 2)
+            if (matrix.GetRowsCount() < 2)
             {
                 return matrix.vectors[0].GetCoordinate(0);
             }
@@ -281,7 +281,7 @@ namespace Academits.Gudkov.MatrixTask
 
         private int GetNonZeroBasisMinorIndex()
         {
-            for (int i = 0; i < vectors.Length; ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
                 if (vectors[i].GetCoordinate(0) != 0)
                 {
@@ -294,7 +294,7 @@ namespace Academits.Gudkov.MatrixTask
 
         private void SetBasisMinorInFirstRow(int index)
         {
-            for (int j = 0; j < vectors[0].GetSize(); ++j)
+            for (int j = 0; j < GetColumnsCount(); ++j)
             {
                 vectors[0].SetCoordinate(j, vectors[0].GetCoordinate(j) + vectors[index].GetCoordinate(j));
             }
@@ -302,11 +302,11 @@ namespace Academits.Gudkov.MatrixTask
 
         private void SetColumnZero()
         {
-            for (int i = 1; i < vectors.Length; ++i)
+            for (int i = 1; i < GetRowsCount(); ++i)
             {
                 double itemCoefficient = -vectors[i].GetCoordinate(0) / vectors[0].GetCoordinate(0);
 
-                for (int j = 0; j < vectors[0].GetSize(); ++j)
+                for (int j = 0; j < GetColumnsCount(); ++j)
                 {
                     vectors[i].SetCoordinate(j, vectors[i].GetCoordinate(j) + itemCoefficient * vectors[0].GetCoordinate(j));
                 }
@@ -315,11 +315,11 @@ namespace Academits.Gudkov.MatrixTask
 
         private Matrix GetSubmatrix()
         {
-            Matrix matrix = new Matrix(vectors.Length - 1, vectors[0].GetSize() - 1);
+            Matrix matrix = new Matrix(GetRowsCount() - 1, GetColumnsCount() - 1);
 
-            for (int i = 0; i < matrix.vectors.Length; ++i)
+            for (int i = 0; i < matrix.GetRowsCount(); ++i)
             {
-                for (int j = 0; j < matrix.vectors[0].GetSize(); ++j)
+                for (int j = 0; j < matrix.GetColumnsCount(); ++j)
                 {
                     matrix.vectors[i].SetCoordinate(j, vectors[i + 1].GetCoordinate(j + 1));
                 }
@@ -330,18 +330,18 @@ namespace Academits.Gudkov.MatrixTask
 
         public Vector MultiplyByVector(Vector vector)
         {
-            if (vectors[0].GetSize() != vector.GetSize())
+            if (GetColumnsCount() != vector.GetSize())
             {
-                throw new ArgumentException($"Количество столбцов матрицы векторов и размер вектора не совпадают, умножение на вектор невозможно. Размер матрицы векторов: {vectors.Length} x {vectors[0].GetSize()}. Размер вектора: {vector.GetSize()}");
+                throw new ArgumentException($"Ошибка: Количество столбцов матрицы векторов должно совпадать с размерностью вектора. Переданы размеры матрицы: {GetRowsCount()} x {GetColumnsCount()}. Передана размерность вектора ({nameof(vector)}): {vector.GetSize()}");
             }
 
             Vector multiplicationVector = new Vector(vector.GetSize());
 
-            for (int i = 0; i < vectors.Length; ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
                 double sum = 0;
 
-                for (int j = 0; j < vectors[0].GetSize(); ++j)
+                for (int j = 0; j < GetColumnsCount(); ++j)
                 {
                     sum += vectors[i].GetCoordinate(j) * vector.GetCoordinate(j);
                 }
@@ -354,9 +354,9 @@ namespace Academits.Gudkov.MatrixTask
 
         private void CheckForDimensionsEquals(Matrix matrix)
         {
-            if (vectors.Length != matrix.vectors.Length || vectors[0].GetSize() != matrix.vectors[0].GetSize())
+            if (GetRowsCount() != matrix.GetRowsCount() || GetColumnsCount() != matrix.GetColumnsCount())
             {
-                throw new ArgumentException($"Размеры матриц векторов не совпадают, операция невозможна. Размеры матрицы1: {vectors.Length} x {vectors[0].GetSize()}. Размеры матрицы2: {matrix.vectors.Length} x {matrix.vectors[0].GetSize()}");
+                throw new ArgumentException($"Ошибка: Размеры матриц векторов должны совпадать. Переданы размеры матрицы1: {GetRowsCount()} x {GetColumnsCount()}. Переданы размеры матрицы2 ({nameof(matrix)}): {matrix.GetRowsCount()} x {matrix.GetColumnsCount()}");
             }
         }
 
@@ -364,9 +364,9 @@ namespace Academits.Gudkov.MatrixTask
         {
             CheckForDimensionsEquals(matrix);
 
-            for (int i = 0; i < vectors.GetLength(0); ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
-                for (int j = 0; j < vectors[0].GetSize(); ++j)
+                for (int j = 0; j < GetColumnsCount(); ++j)
                 {
                     vectors[i].SetCoordinate(j, vectors[i].GetCoordinate(j) + matrix.vectors[i].GetCoordinate(j));
                 }
@@ -377,9 +377,9 @@ namespace Academits.Gudkov.MatrixTask
         {
             CheckForDimensionsEquals(matrix);
 
-            for (int i = 0; i < vectors.GetLength(0); ++i)
+            for (int i = 0; i < GetRowsCount(); ++i)
             {
-                for (int j = 0; j < vectors[0].GetSize(); ++j)
+                for (int j = 0; j < GetColumnsCount(); ++j)
                 {
                     vectors[i].SetCoordinate(j, vectors[i].GetCoordinate(j) - matrix.vectors[i].GetCoordinate(j));
                 }
@@ -410,16 +410,16 @@ namespace Academits.Gudkov.MatrixTask
 
         public static Matrix GetMultiply(Matrix matrix1, Matrix matrix2)
         {
-            if (matrix1.vectors[0].GetSize() != matrix2.vectors.Length)
+            if (matrix1.GetColumnsCount() != matrix2.GetRowsCount())
             {
-                throw new ArgumentException($"Матрицы векторов не согласованы, число столбцов первой матрицы не равно числу строк второй матрицы, произведение невозможно. Размеры {nameof(matrix1)}: {matrix1.vectors.Length} x {matrix1.vectors[0].GetSize()}. Размеры {nameof(matrix2)}: {matrix2.vectors.Length} x {matrix2.vectors[0].GetSize()}");
+                throw new ArgumentException($"Ошибка: Матрицы векторов должны быть согласованы, число столбцов первой матрицы должно быть равно числу строк второй матрицы. Переданы размеры: {nameof(matrix1)}: {matrix1.GetRowsCount()} x {matrix1.GetColumnsCount()}, {nameof(matrix2)}: {matrix2.GetRowsCount()} x {matrix2.GetColumnsCount()}");
             }
 
-            Matrix matrix = new Matrix(matrix1.vectors.Length, matrix2.vectors[0].GetSize());
+            Matrix matrix = new Matrix(matrix1.GetRowsCount(), matrix2.GetColumnsCount());
 
-            for (int i = 0; i < matrix2.vectors[0].GetSize(); ++i)
+            for (int i = 0; i < matrix2.GetColumnsCount(); ++i)
             {
-                for (int j = 0; j < matrix1.vectors.Length; ++j)
+                for (int j = 0; j < matrix1.GetRowsCount(); ++j)
                 {
                     matrix.vectors[j].SetCoordinate(i, Vector.GetScalarMultiply(matrix1.GetRow(j), matrix2.GetColumn(i)));
                 }
